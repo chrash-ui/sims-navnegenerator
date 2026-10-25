@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med full oversikt over kjønn, alder, relasjoner og Sims-personlighet!")
+st.write("Skap din neste sim eller familie med spillspesifikke aldergrupper, okkulte typer, studier og personlighet!")
 
 # --- NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -116,35 +116,40 @@ relasjonsstatuser = [
     "Forlovet 💎", 
     "Skilt ⚡", 
     "Det er komplisert... 🎭", 
-    "Enke / Enkemann 🖤",
     "Hemmelig forelsket 💌"
 ]
+
+okkult_typer = ["Vampyr 🦇", "Heks / Trollmann 🪄", "Romvesen 👽", "Varulv 🐺"]
+studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
 
 # --- SPILLSPESIFIKKE TREKK OG LIVSMÅL ---
 spill_database = {
     "Sims 4 (Moderne)": {
         "trekk_type": "trekk",
+        "har_ung_voksen": True,
         "trekk": ["Klossete", "Hissig", "Kreativ", "Lat", "Geni", "Matvrak", "Høflig", "Romantisk", "Sjenert", "Overambisiøs", "Innadvendt", "Selskapssyk"],
         "mal": ["Bli superkjendis", "Mestre matlaging", "Finne sann kjærlighet", "Kjøpe drømmehuset", "Fullføre et aspirasjonsmål"]
     },
     "Sims 3 (Åpen verden)": {
         "trekk_type": "trekk",
+        "har_ung_voksen": True,
         "trekk": ["Samler", "Overfladisk", "Pyroman", "Håpløs romantiker", "Eksentrisk", "Besserwisser", "Naturist", "Drømmende", "Leken", "Kynisk"],
         "mal": ["Oppfylle en livslang drøm", "Lære alle ferdigheter", "Eie hele byen", "Se spøkelser i mausoleet", "Bli mestertyv"]
     },
     "Sims 2 (Klassisk drama)": {
         "trekk_type": "poeng",
+        "har_ung_voksen": False,  # Sims 2 har bare Ung voksen på universitetet i Uni-pakken, standard basisspill har Voksen/Eldre
         "stjernetegn": ["Væren", "Tyren", "Tvillingene", "Krepsen", "Løven", "Jomfruen", "Vekten", "Skorpionen", "Skytten", "Stenbukken", "Vannmannen", "Fiskene"],
         "mal": ["Romanse (Romance)", "Kunnskap (Knowledge)", "Familie (Family)", "Formue (Fortune)", "Popularitet (Popularity)"]
     },
     "Sims 1 (Retro/Original)": {
         "trekk_type": "trekk",
+        "har_ung_voksen": False,
         "trekk": ["Panisk for brann", "Avhengig av pizza", "Kranglevoren", "Evig uheldig", "Gjerrig", "Stuegris", "Tvangsmessig rydder"],
         "mal": ["Bli rik nok til et basseng uten stige", "Overleve spøkelsene i huset", "Få naboene til å like deg", "Kjøpe en magisk dverg", "Unngå marsvin-syken"]
     }
 }
 
-voksne_aldre = ["Ung voksen", "Voksen", "Eldre"]
 barn_aldre = ["Baby", "Småbarn (Toddler)", "Barn", "Tenåring"]
 
 # --- SIDESTOLPE (INNSTILLINGER) ---
@@ -156,6 +161,13 @@ valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt / Mann", "Jen
 valgt_type = st.sidebar.selectbox("Velg navnetype:", ["Begge", "Normale", "Rare & gøye", "Okkult 🦇"])
 
 full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
+
+def hent_voksen_alder(spill_navn):
+    har_uv = spill_database[spill_navn]["har_ung_voksen"]
+    if har_uv:
+        return random.choice(["Ung voksen", "Voksen", "Eldre"])
+    else:
+        return random.choice(["Voksen", "Eldre"])
 
 def generer_personlighet(spill_navn):
     data = spill_database[spill_navn]
@@ -212,22 +224,26 @@ def hent_enkelt_navn():
         else:
             t = "Okkult"
 
+    okkult_detalj = ""
     if t == "Okkult":
         etter = random.choice(okkulte_etternavn)
         spraak_tekst = "Okkult / Overnaturlig"
+        okkult_detalj = f" ({random.choice(okkult_typer)})"
     else:
         etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
         spraak_tekst = s
 
     fornavn = hent_fornavn(k_kode, t, s)
     personlighet, mal = generer_personlighet(valgt_spill)
-    alder = random.choice(voksne_aldre + barn_aldre)
+    alder = hent_voksen_alder(valgt_spill)
     
-    # Velg relasjonsstatus basert på alder
-    if alder in voksne_aldre:
-        relasjon = random.choice(relasjonsstatuser)
+    # Sjekk universitet (kun for ung voksen / voksen, f.eks. 30% sjanse)
+    studie_info = ""
+    if alder in ["Ung voksen", "Voksen"] and random.random() < 0.35:
+        studie_info = f"🎓 Studerer på universitetet: **{random.choice(studieretninger)}**"
+        relasjon = "Student 🎒"
     else:
-        relasjon = "Barn i husholdningen 🧸"
+        relasjon = random.choice(relasjonsstatuser)
 
     kjonn_visning = "Mann / Gutt 👨" if k_kode == "Gutt" else "Kvinne / Jente 👩"
 
@@ -235,9 +251,10 @@ def hent_enkelt_navn():
         "navn": f"{fornavn} {etter}",
         "kjonn": kjonn_visning,
         "spraak": spraak_tekst,
-        "stil": t,
+        "stil": t + okkult_detalj,
         "alder": alder,
         "relasjon": relasjon,
+        "studie": studie_info,
         "personlighet": personlighet,
         "mal": mal
     }
@@ -246,7 +263,10 @@ def hent_enkelt_navn():
 if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
-        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Relasjonsstatus:** {sim['relasjon']}\n* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
+        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n"
+        if sim['studie']:
+            resultat_tekst += f"* {sim['studie']}\n"
+        resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
         st.success(resultat_tekst)
         st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
     else:
@@ -255,8 +275,10 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
 
         if t == "Okkult":
             felles_etter = random.choice(okkulte_etternavn)
+            familie_okkult_type = f" [{random.choice(okkult_typer)}]"
         else:
             felles_etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
+            familie_okkult_type = ""
 
         # Foreldre
         antall_foreldre = random.choice([1, 2])
@@ -265,15 +287,21 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         if antall_foreldre == 2:
             fam_status = "Gifte / Partnere 💍"
         else:
-            fam_status = random.choice(["Alene-forelder 🧑‍👦", "Skilt / Delt omsorg ⚡", "Enke/Enkemann 🖤"])
+            fam_status = random.choice(["Alene-forelder 🧑‍👦", "Skilt / Delt omsorg ⚡"])
 
         for i in range(antall_foreldre):
             k_kode = random.choice(["Gutt", "Jente"])
             k_tekst = "Mann 👨" if k_kode == "Gutt" else "Kvinne 👩"
             fornavn = hent_fornavn(k_kode, t, s)
-            alder = random.choice(voksne_aldre)
+            alder = hent_voksen_alder(valgt_spill)
             pers, _ = generer_personlighet(valgt_spill)
-            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers})*")
+            
+            # Sjekk om forelder studerer
+            forelder_studie = ""
+            if alder in ["Ung voksen", "Voksen"] and random.random() < 0.25:
+                forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
+
+            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers}{forelder_studie})*")
 
         # Barn
         antall_barn = random.randint(0, 4)
@@ -286,7 +314,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             pers, mal = generer_personlighet(valgt_spill)
             barn_liste.append(f"**Barn {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
 
-        fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter} ({valgt_spill})\n"
+        fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter}{familie_okkult_type} ({valgt_spill})\n"
         fam_tekst += f"* **Familie-status:** {fam_status}\n\n"
         fam_tekst += "\n".join(foreldre_liste) + "\n\n"
         if barn_liste:
