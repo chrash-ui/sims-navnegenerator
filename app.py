@@ -3,55 +3,79 @@ import streamlit as st
 
 st.set_page_config(page_title="Ultimate Sims Navnegenerator", page_icon="🟢", layout="centered")
 
+# --- SIDESTOLPE (TEMAVELGER FLYTTEST ØVERST) ---
+mørk_modus = st.sidebar.checkbox("🌙 Mørk modus", value=False)
+
 # --- SIMS-INSPIRERT STYLING (CSS) ---
-st.markdown("""
+if mørk_modus:
+    bg_color = "#1e1e2e"
+    card_bg = "#2b2b3d"
+    text_color = "#e0e0e0"
+    header_color = "#81c784"
+    sidebar_bg = "#181825"
+    border_color = "#81c784"
+    btn_bg = "#388e3c"
+    btn_hover = "#4caf50"
+else:
+    bg_color = "#f4f7f6"
+    card_bg = "#ffffff"
+    text_color = "#333333"
+    header_color = "#2e7d32"
+    sidebar_bg = "#e8f5e9"
+    border_color = "#65C467"
+    btn_bg = "#65C467"
+    btn_hover = "#4CAF50"
+
+st.markdown(f"""
 <style>
-    /* Hovedstil og fonter */
-    .stApp {
-        background-color: #f4f7f6;
-    }
+    /* Hovedstil og bakgrunn */
+    .stApp {{
+        background-color: {bg_color};
+        color: {text_color};
+    }}
     
-    /* Tilpass tittel */
-    h1 {
-        color: #2e7d32;
+    /* Overskrifter */
+    h1, h2, h3, h4 {{
+        color: {header_color} !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    }}
     
     /* Resultatboks (Sims-kort) */
-    .sims-card {
-        background-color: #ffffff;
+    .sims-card {{
+        background-color: {card_bg};
+        color: {text_color};
         padding: 20px;
         border-radius: 12px;
-        border-left: 6px solid #65C467;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border-left: 6px solid {border_color};
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         margin-bottom: 20px;
-    }
+    }}
+    
+    .sims-card p, .sims-card li {{
+        color: {text_color};
+    }}
     
     /* Knapper med Sims-grønn farge */
-    .stButton>button {
-        background-color: #65C467;
-        color: white;
+    .stButton>button {{
+        background-color: {btn_bg};
+        color: white !important;
         border-radius: 8px;
         font-weight: bold;
         border: none;
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
-    }
-    .stButton>button:hover {
-        background-color: #4CAF50;
-        color: white;
-    }
+    }}
+    .stButton>button:hover {{
+        background-color: {btn_hover};
+        color: white !important;
+    }}
     
     /* Sidestolpe */
-    [data-testid="stSidebar"] {
-        background-color: #e8f5e9;
-    }
+    [data-testid="stSidebar"] {{
+        background-color: {sidebar_bg};
+    }}
 </style>
 """, unsafe_allow_html=True)
-
-# Initialiser historikk i sesjonen hvis den ikke finnes
-if "historikk" not in st.session_state:
-    st.session_state.historikk = []
 
 st.title("🟢 Ultimate Sims Navnegenerator")
 st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, dyretrekk, utvidede navnelister og karrierer!")
@@ -260,7 +284,7 @@ spill_database = {
 
 barn_aldre = ["Baby", "Småbarn (Toddler)", "Barn", "Tenåring"]
 
-# --- SIDESTOLPE (INNSTILLINGER) ---
+# --- SIDESTOLPE RESTEN AV INNSTILLINGENE ---
 st.sidebar.header("⚙️ Konfigurasjon")
 valgt_spill = st.sidebar.selectbox("Velg Sims-versjon:", list(spill_database.keys()))
 valgt_modus = st.sidebar.radio("Modus:", ["Enkeltsim", "Familie (Dynamisk antall barn & alder)"])
@@ -277,8 +301,11 @@ if er_okkult:
     valgt_okkult_type = st.sidebar.selectbox("Velg okkult-type:", ["Tilfeldig okkult"] + tilgjengelige_okkulte)
 
 legg_til_husdyr = st.sidebar.checkbox("🐾 Legg til husdyr (Pets)?", value=False)
-
 full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
+
+# Initialiser historikk i sesjonen hvis den ikke finnes
+if "historikk" not in st.session_state:
+    st.session_state.historikk = []
 
 def generer_personlighet(spill_navn):
     data = spill_database[spill_navn]
@@ -327,7 +354,7 @@ def hent_husdyr_tekst(spill):
         
     mulige_dyre_trekk = spill_database[spill]["dyre_trekk"]
     trekk = random.choice(mulige_dyre_trekk)
-    return f"🐾 **Husdyr:** {dyre_navn} ({art}) — *Trekk: {trekk}*"
+    return f"🐾 <b>Husdyr:</b> {dyre_navn} ({art}) — <i>Trekk: {trekk}</i>"
 
 def hent_enkelt_navn():
     if full_random:
@@ -368,7 +395,7 @@ def hent_enkelt_navn():
     
     if kan_ha_universitet and random.random() < 0.35:
         er_paa_universitet = True
-        studie_info = f"🎓 Studerer på universitetet: **{random.choice(studieretninger)}**"
+        studie_info = f"🎓 Studerer på universitetet: <b>{random.choice(studieretninger)}</b>"
         relasjon = "Student 🎒"
     else:
         relasjon = random.choice(relasjonsstatuser)
@@ -479,7 +506,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                     forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
 
             pers, _ = generer_personlighet(valgt_spill)
-            foreldre_liste.append(f"<li><b>Forelder {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} *(Jobb: {forelder_jobb} | {pers}{forelder_studie})*</li>")
+            foreldre_liste.append(f"<li><b>Forelder {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} <i>(Jobb: {forelder_jobb} | {pers}{forelder_studie})</i></li>")
 
         if er_universitets_verden:
             antall_barn = 0
@@ -493,7 +520,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             fornavn = hent_fornavn(k_kode, er_okkult, s)
             alder = random.choice(barn_aldre)
             pers, mal = generer_personlighet(valgt_spill)
-            barn_liste.append(f"<li><b>Barn {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} *({pers} — Mål: {mal})*</li>")
+            barn_liste.append(f"<li><b>Barn {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} <i>({pers} — Mål: {mal})</i></li>")
 
         fam_tekst = f"""
         <div class="sims-card">
