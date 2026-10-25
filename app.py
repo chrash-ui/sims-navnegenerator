@@ -8,16 +8,17 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med spillspesifikke aldersgrupper, valgfri okkult-type, studier og personlighet!")
+st.write("Skap din neste sim eller familie med utvidede navnelister, kjæledyr med egne navn, karrierer og spillspesifikke regler!")
 
-# --- NAVNELISTER ---
+# --- UTVIDEDE NAVNELISTER ---
 norske_guttenavn_normale = [
     "Lucas", "Oliver", "Filip", "Emil", "Magnus", "Håkon", "Henrik", "Jonas", "Sander", "Jakob",
     "Elias", "Oskar", "Kasper", "Noah", "William", "Mathias", "Lukas", "Aksel", "Markus", "Tobias",
     "Martin", "Fredrik", "Kristian", "Alexander", "Marius", "Andreas", "Daniel", "Sebastian", "Theodor", "Sivert",
     "Johannes", "Emilian", "Casper", "Aron", "Leander", "Gabriel", "Isak", "Sven", "Knut", "Tor",
     "Even", "Jon", "Terje", "Per", "Pål", "Espen", "Stian", "Thomas", "Christian", "Bendik",
-    "Mads", "Simen", "Tobias", "Vebjørn", "Eskil", "Sondre", "Brage", "Sturla", "Tage", "Aksel"
+    "Mads", "Simen", "Tobias", "Vebjørn", "Eskil", "Sondre", "Brage", "Sturla", "Tage", "Aksel",
+    "Jesper", "Nikolai", "Vetle", "Hermann", "Cornelius", "Adrian", "Julian", "Truls", "Birk", "Sigurd"
 ]
 
 norske_guttenavn_rare = [
@@ -25,7 +26,8 @@ norske_guttenavn_rare = [
     "Brynjulf", "Agnar", "Halldor", "Kjell-Bjarne", "Truls", "Trygve", "Tormod", "Asbjørn",
     "Thorbjörn", "Sigurd", "Ragnar", "Øystein", "Guttorm", "Tore", "Audun", "Jarand",
     "Gunnar", "Ottar", "Valdemar", "Fridtjof", "Bård", "Yngve", "Dagfinn", "Reinert",
-    "Balder", "Torstein", "Herbjørn", "Varg", "Trond", "Tellef", "Asgeir", "Snorre"
+    "Balder", "Torstein", "Herbjørn", "Varg", "Trond", "Tellef", "Asgeir", "Snorre",
+    "Ottar", "Sigbjørn", "Reidar", "Toralf", "Arnulf", "Einar", "Gorm", "Sturle"
 ]
 
 norske_jentenavn_normale = [
@@ -34,7 +36,8 @@ norske_jentenavn_normale = [
     "Hedda", "Tuva", "Vilde", "Live", "Sunniva", "Helena", "Selma", "Martine", "Cornelia", "Victoria",
     "Mia", "Hennie", "Amelia", "Frida", "Agnes", "Sigrid", "Line", "Silje", "Marte", "Camilla",
     "Eline", "Stine", "Tonje", "Heidi", "Kristine", "Charlotte", "Pernille", "Johanne", "Marthe", "Cecilie",
-    "Sanna", "Malin", "Ronja", "Ylva", "Oda", "Mille", "Filippa", "Thea", "Carina", "Elise"
+    "Sanna", "Malin", "Ronja", "Ylva", "Oda", "Mille", "Filippa", "Thea", "Carina", "Elise",
+    "Signe", "Thale", "Ada", "Johanne", "Matilde", "Elida", "Oline", "Tale", "Alva", "Erle"
 ]
 
 norske_jentenavn_rare = [
@@ -42,7 +45,8 @@ norske_jentenavn_rare = [
     "Gunnbjørg", "Solveig", "Borghild", "Gerd", "Ragnhild", "Ragna", "Wenche", "Bergljot",
     "Aslaug", "Torhild", "Liv", "Gunhild", "Hjordis", "Valborg", "Signhild", "Thora",
     "Ingebjørg", "Guri", "Berit", "Tordis", "Magnhild", "Oddbjørg", "Rannveig", "Åse",
-    "Siv", "Tora", "Frøydis", "Gunvor", "Rønnaug", "Herborg", "Ylva", "Sunniva"
+    "Siv", "Tora", "Frøydis", "Gunvor", "Rønnaug", "Herborg", "Ylva", "Sunniva",
+    "Gunnhild", "Torunn", "Rønnaug", "Hildur", "Asgjerd", "Signy", "Valdis"
 ]
 
 engelske_guttenavn_normale = [
@@ -51,7 +55,8 @@ engelske_guttenavn_normale = [
     "Daniel", "Matthew", "David", "Joseph", "Samuel", "John", "Wyatt", "Aiden", "Julian", "Grayson",
     "Leo", "Isaiah", "Charles", "Thomas", "Josiah", "Hudson", "Christian", "Hunter", "Connor", "Eli",
     "Ezra", "Aaron", "Landon", "Adrian", "Jonathan", "Nolan", "Jeremiah", "Easton", "Elias", "Colton",
-    "Miles", "Cody", "Blake", "Asher", "Carson", "Austin", "Max", "Tyler", "Brandon", "Kevin"
+    "Miles", "Cody", "Blake", "Asher", "Carson", "Austin", "Max", "Tyler", "Brandon", "Kevin",
+    "Cooper", "Parker", "Xavier", "Cole", "Ian", "Dominic", "Jordan", "Brody", "Carson", "Chase"
 ]
 
 engelske_guttenavn_rare = [
@@ -59,7 +64,7 @@ engelske_guttenavn_rare = [
     "Archibald", "Ebenezer", "Zebedee", "Horace", "Clarence", "Eustace", "Percival", "Hubert",
     "Phineas", "Balthazar", "Cornelius", "Thaddeus", "Rufus", "Ulysses", "Ambrose", "Gervase",
     "Beauregard", "Ignatz", "Skeeter", "Clyde", "Merle", "Elmer", "Wile E",
-    "Aloysius", "Zephyr", "Bartholomew", "Mortimer", "Ignatius", "Thaddeus", "Gideon", "Barnaby"
+    "Zephyr", "Mortimer", "Gideon", "Gareth", "Bartholomew", "Cyprian", "Cuthbert"
 ]
 
 engelske_jentenavn_normale = [
@@ -68,7 +73,8 @@ engelske_jentenavn_normale = [
     "Riley", "Lily", "Aubrey", "Zoey", "Penelope", "Hannah", "Lillian", "Addison",
     "Ellie", "Stella", "Natalie", "Zoe", "Leah", "Hazel", "Violet", "Aurora", "Savannah", "Audrey",
     "Brooklyn", "Bella", "Claire", "Skylar", "Lucy", "Paisley", "Everly", "Anna", "Caroline", "Nova",
-    "Maya", "Naomi", "Elena", "Sarah", "Alice", "Samantha", "Ruby", "Piper", "Quinn", "Sadie"
+    "Maya", "Naomi", "Elena", "Sarah", "Alice", "Samantha", "Ruby", "Piper", "Quinn", "Sadie",
+    "Stella", "Hazel", "Aurora", "Penelope", "Savannah", "Audrey", "Claire", "Skylar"
 ]
 
 engelske_jentenavn_rare = [
@@ -76,15 +82,25 @@ engelske_jentenavn_rare = [
     "Gertrude", "Prudence", "Wilhelmina", "Tabitha", "Hephzibah", "Petunia", "Mabel", "Brunhilde",
     "Eunice", "Gladys", "Maude", "Pansy", "Agatha", "Winifred", "Hermione", "Cornelia",
     "Gwendolyn", "Blanche", "Beryl", "Enid", "Myrtle", "Opal", "Zenobia", "Clementine",
-    "Elvira", "Morticia", "Wednesday", "Zephyra", "Ophelia", "Hexa", "Belladonna", "Raven"
+    "Elvira", "Morticia", "Wednesday", "Zephyra", "Ophelia", "Hexa", "Belladonna", "Raven",
+    "Thomasin", "Araminta", "Drusilla", "Gwendolen", "Isolde", "Maudlin"
 ]
 
 okkulte_fornavn = [
     "Vladislaus", "Count", "Lilith", "Raven", "Shadow", "Dracula", "Nosferatu", "Vespera",
     "Malakor", "Zephyr", "Pandora", "Grim", "Nyx", "Oberon", "Titania", "Astaroth",
     "Hexia", "Zeus", "Hecate", "Lucifer", "Vampira", "Nebula", "Xylar", "Zod",
-    "Asmodeus", "Mortis", "Vesper", "Sable", "Thorne", "Midnight", "Eclipse", "Banshee"
+    "Asmodeus", "Mortis", "Vesper", "Sable", "Thorne", "Midnight", "Eclipse", "Banshee",
+    "Malakor", "Azazel", "Mephisto", "Cassandra", "Calypso", "Pandora", "Hecate"
 ]
+
+# --- DYRENAVN LISTER ---
+hundehun_navn = ["Buster", "Karo", "Rex", "Balder", "Bruno", "Rambo", "Theo", "Bamse", "Charlie", "Rocky", "Thor", "Cooper", "Tyson", "Milo"]
+hundehun_jente = ["Bella", "Luna", "Ayla", "Maja", "Mira", "Stella", "Freia", "Zelda", "Daisy", "Saga", "Ronja", "Nala"]
+katt_navn = ["Pusur", "Milling", "Fjonken", "Felix", "Socks", "Tiger", "Simba", "Oliver", "Nils", "Laban"]
+katt_jente = ["Missen", "Nala", "Cleo", "Sassy", "Minni", "Pia", "Siri", "Lily"]
+hest_navn = ["Storm", "Faksen", "Spirit", "Gorm", "Thunder", "Cinderella", "Varg", "Dronning", "Blakkken", "Star"]
+lite_dyr_navn = ["Pip", "Squeak", "Nøtteliten", "Gnagern", "Smule", "Pompel", "Pilt", "Fjonken", "Snickers"]
 
 etternavn_norske = [
     "Hansen", "Johansen", "Olsen", "Andersen", "Pedersen", "Nilsen", "Kristiansen", "Larsen", "Sørensen", "Rasmussen",
@@ -93,7 +109,8 @@ etternavn_norske = [
     "Tøffel", "Skinknes", "Vaffel", "Spekesild", "Knoll", "Tott", "Gjørmedal", "Langbein", "Mås",
     "Berg", "Haugen", "Moen", "Holm", "Dahl", "Eriksen", "Karlsen", "Johnsen", "Pettersen", "Svendsen",
     "Jakobsen", "Jørgensen", "Henriksen", "Halvorsen", "Mo", "Fredriksen", "Andresen", "Nielsen",
-    "Blom", "Gjesdal", "Svinø", "Fladen", "Kål", "Loffen", "Pølse", "Blyant", "Knall", "Smør"
+    "Blom", "Gjesdal", "Svinø", "Fladen", "Kål", "Loffen", "Pølse", "Blyant", "Knall", "Smør",
+    "Stubbe", "Ødegaard", "Nygård", "Fossum", "Sandvik", "Klefstad", "Bjerke", "Moe"
 ]
 
 etternavn_engelske = [
@@ -102,12 +119,14 @@ etternavn_engelske = [
     "Pendelton", "Cumberbatch", "Butterworth", "Snodgrass", "Pettibone", "Hollingsworth", "Pumpernickel",
     "Thorn", "Winterbottom", "Sprocket", "Gasket", "Fumble", "Bumblebee", "Dingle", "Snort",
     "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Moore", "Young",
-    "Fluffernutter", "Snoot", "Wigglesworth", "Bumble", "Snicklefritz", "Giggle", "Skunk", "Toadstool", "Mud puddle"
+    "Fluffernutter", "Snoot", "Wigglesworth", "Bumble", "Snicklefritz", "Giggle", "Skunk", "Toadstool", "Mud puddle",
+    "Pemberton", "Fairchild", "Halloway", "Blackwood", "Sterling", "Wellington"
 ]
 
 okkulte_etternavn = [
     "Bloodworth", "Nightshade", "Grimwood", "Blackwood", "Cryptic", "Graves", "Shadowfen",
-    "Vampire", "Spellbinder", "Moonstone", "Bones", "Darkness", "Abyss", "Stormrider", "Casket"
+    "Vampire", "Spellbinder", "Moonstone", "Bones", "Darkness", "Abyss", "Stormrider", "Casket",
+    "Duskwood", "Hexen", "Mourning", "Silverfang", "Wormwood"
 ]
 
 relasjonsstatuser = [
@@ -119,12 +138,15 @@ relasjonsstatuser = [
 ]
 
 studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
+dyre_arter = ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr (Fugl/Gnager) 🐹"]
+dyre_trekk = ["Leken 🎾", "Lat 😴", "Aggressiv 💢", "Kosete ❤️", "Uavhengig 🐾", "Fryktsom 💨", "Nysgjerrig 🔍"]
 
-# --- SPILLSPESIFIKKE TREKK, OKKULTE TYPER OG LIVSMÅL ---
+# --- SPILLSPESIFIKKE DATA ---
 spill_database = {
     "Sims 4 (Moderne)": {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
+        "kan_studere": True,
         "okkulte": [
             "Vampyr 🦇 (Sims 4: Vampires)", 
             "Trollmann / Spellcaster 🪄 (Sims 4: Realm of Magic)", 
@@ -133,12 +155,14 @@ spill_database = {
             "Havfrue 🧜‍♀️ (Sims 4: Island Living)", 
             "PlantSim 🌱 (Sims 4: Utfordring/Event)"
         ],
+        "karrierer": ["Astronaut", "Kokk", "Kriminell", "Forretningsmann", "Underholder", "Forfatter", "Idrettsutøver", "Hemmelig agent", "Stilist", "Forsker"],
         "trekk": ["Klossete", "Hissig", "Kreativ", "Lat", "Geni", "Matvrak", "Høflig", "Romantisk", "Sjenert", "Overambisiøs", "Innadvendt", "Selskapssyk"],
         "mal": ["Bli superkjendis", "Mestre matlaging", "Finne sann kjærlighet", "Kjøpe drømmehuset", "Fullføre et aspirasjonsmål"]
     },
     "Sims 3 (Åpen verden)": {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
+        "kan_studere": True,
         "okkulte": [
             "Vampyr 🦇 (Sims 3: Late Night / Supernatural)", 
             "Heks / Warlock 🪄 (Sims 3: Supernatural)", 
@@ -148,12 +172,14 @@ spill_database = {
             "Zombie 🧟 (Sims 3: Supernatural)", 
             "Genie / Ånd i flaske 🧞 (Sims 3: Showtime)"
         ],
+        "karrierer": ["Arkitekt", "Spøkelsesjeger", "Privatetterforsker", "Musiker", "Politiet", "Medisin", "Politiker", "Militæret", "Journalistikk", "Idrett"],
         "trekk": ["Samler", "Overfladisk", "Pyroman", "Håpløs romantiker", "Eksentrisk", "Besserwisser", "Naturist", "Drømmende", "Leken", "Kynisk"],
         "mal": ["Oppfylle en livslang drøm", "Lære alle ferdigheter", "Eie hele byen", "Se spøkelser i mausoleet", "Bli mestertyv"]
     },
     "Sims 2 (Klassisk drama)": {
         "trekk_type": "poeng",
         "har_ung_voksen": False,
+        "kan_studere": True,
         "okkulte": [
             "Vampyr 🦇 (Sims 2: Nightlife)", 
             "Zombie 🧟 (Sims 2: University)", 
@@ -161,17 +187,20 @@ spill_database = {
             "Servobot / Robot 🤖 (Sims 2: Open for Business)", 
             "Heks / Trollmann 🪄 (Sims 2: Apartment Life)"
         ],
+        "karrierer": ["Leker (Toymaking)", "Showbusiness", "Paranormal", "Nattevakt", "Politiet", "Medisin", "Militæret", "Lovens lange arm", "Kokk", "Idrett"],
         "stjernetegn": ["Væren", "Tyren", "Tvillingene", "Krepsen", "Løven", "Jomfruen", "Vekten", "Skorpionen", "Skytten", "Stenbukken", "Vannmannen", "Fiskene"],
         "mal": ["Romanse (Romance)", "Kunnskap (Knowledge)", "Familie (Family)", "Formue (Fortune)", "Popularitet (Popularity)"]
     },
     "Sims 1 (Retro/Original)": {
         "trekk_type": "trekk",
         "har_ung_voksen": False,
+        "kan_studere": False,
         "okkulte": [
             "Magiker / Trollmann 🧙‍♂️ (Sims 1: Makin' Magic)", 
             "Ghoul / Spøkelse 👻 (Sims 1: Livin' Large)", 
             "Mime / Klovn 🤡 (Sims 1: Base/Expansion)"
         ],
+        "karrierer": ["Forretningsliv", "Mote", "Musikk", "Politiet", "Militæret", "Medisin", "Ekstremt", "Arbeidsledig / Drifter"],
         "trekk": ["Panisk for brann", "Avhengig av pizza", "Kranglevoren", "Evig uheldig", "Gjerrig", "Stuegris", "Tvangsmessig rydder"],
         "mal": ["Bli rik nok til et basseng uten stige", "Overleve spøkelsene i huset", "Få naboene til å like deg", "Kjøpe en magisk dverg", "Unngå marsvin-syken"]
     }
@@ -187,23 +216,17 @@ valgt_spraak = st.sidebar.selectbox("Velg språk:", ["Begge", "Norsk", "Engelsk"
 valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt / Mann", "Jente / Kvinne"])
 valgt_type = st.sidebar.selectbox("Velg navnetype:", ["Begge", "Normale", "Rare & gøye"])
 
-# --- NYE OKKULT-KNAPPER ---
+# --- OKKULT & HUSDYR ---
 st.sidebar.markdown("---")
 er_okkult = st.sidebar.checkbox("🦇 Er okkult sim?", value=False)
-
 valgt_okkult_type = None
 if er_okkult:
     tilgjengelige_okkulte = spill_database[valgt_spill]["okkulte"]
     valgt_okkult_type = st.sidebar.selectbox("Velg okkult-type:", ["Tilfeldig okkult"] + tilgjengelige_okkulte)
 
-full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
+legg_til_husdyr = st.sidebar.checkbox("🐾 Legg til husdyr (Pets)?", value=False)
 
-def hent_voksen_alder(spill_navn):
-    har_uv = spill_database[spill_navn]["har_ung_voksen"]
-    if har_uv:
-        return random.choice(["Ung voksen", "Voksen", "Eldre"])
-    else:
-        return random.choice(["Voksen", "Eldre"])
+full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
 
 def generer_personlighet(spill_navn):
     data = spill_database[spill_navn]
@@ -237,6 +260,20 @@ def hent_fornavn(kjonn_kode, er_ok, spraak):
         else:
             return random.choice(engelske_jentenavn_normale if valgt_type != "Rare & gøye" else engelske_jentenavn_rare)
 
+def hent_husdyr_tekst():
+    art = random.choice(dyre_arter)
+    if "Hund" in art:
+        dyre_navn = random.choice(hundehun_navn + hundehun_jente)
+    elif "Katt" in art:
+        dyre_navn = random.choice(katt_navn + katt_jente)
+    elif "Hest" in art:
+        dyre_navn = random.choice(hest_navn)
+    else:
+        dyre_navn = random.choice(lite_dyr_navn)
+        
+    trekk = random.choice(dyre_trekk)
+    return f"🐾 **Husdyr:** {dyre_navn} ({art}) — *Trekk: {trekk}*"
+
 def hent_enkelt_navn():
     if full_random:
         s = random.choice(["Norsk", "Engelsk"])
@@ -269,14 +306,31 @@ def hent_enkelt_navn():
 
     fornavn = hent_fornavn(k_kode, lokal_okkult, s)
     personlighet, mal = generer_personlighet(valgt_spill)
-    alder = hent_voksen_alder(valgt_spill)
     
+    kan_ha_universitet = spill_database[valgt_spill]["kan_studere"]
     studie_info = ""
-    if alder in ["Ung voksen", "Voksen"] and random.random() < 0.35:
+    er_paa_universitet = False
+    
+    if kan_ha_universitet and random.random() < 0.35:
+        er_paa_universitet = True
         studie_info = f"🎓 Studerer på universitetet: **{random.choice(studieretninger)}**"
         relasjon = "Student 🎒"
     else:
         relasjon = random.choice(relasjonsstatuser)
+
+    karriere_liste = spill_database[valgt_spill]["karrierer"]
+    karriere = random.choice(karriere_liste) if not er_paa_universitet else "Fulltidsstudent 📚"
+
+    if valgt_spill == "Sims 2 (Klassisk drama)":
+        alder = "Ung voksen" if er_paa_universitet else random.choice(["Voksen", "Eldre"])
+    elif valgt_spill == "Sims 1 (Retro/Original)":
+        alder = random.choice(["Voksen", "Eldre"])
+    else:
+        if er_paa_universitet:
+            alder = "Ung voksen"
+        else:
+            har_uv = spill_database[valgt_spill]["har_ung_voksen"]
+            alder = random.choice(["Ung voksen", "Voksen", "Eldre"] if har_uv else ["Voksen", "Eldre"])
 
     kjonn_visning = "Mann / Gutt 👨" if k_kode == "Gutt" else "Kvinne / Jente 👩"
 
@@ -287,6 +341,7 @@ def hent_enkelt_navn():
         "stil": stil_tekst,
         "alder": alder,
         "relasjon": relasjon,
+        "karriere": karriere,
         "studie": studie_info,
         "personlighet": personlighet,
         "mal": mal
@@ -296,15 +351,21 @@ def hent_enkelt_navn():
 if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
-        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n"
+        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n* **Karriere / Jobb:** {sim['karriere']}\n"
         if sim['studie']:
             resultat_tekst += f"* {sim['studie']}\n"
         resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
+        
+        if legg_til_husdyr:
+            resultat_tekst += f"\n* {hent_husdyr_tekst()}"
+
         st.success(resultat_tekst)
         st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
     else:
         s = random.choice(["Norsk", "Engelsk"]) if valgt_spraak == "Begge" else valgt_spraak
         passende_okkulte = spill_database[valgt_spill]["okkulte"]
+        kan_ha_universitet = spill_database[valgt_spill]["kan_studere"]
+        er_universitets_verden = kan_ha_universitet and random.random() < 0.25
 
         if er_okkult:
             felles_etter = random.choice(okkulte_etternavn)
@@ -317,11 +378,13 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             felles_etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
             familie_okkult_tekst = ""
 
-        # Foreldre
         antall_foreldre = random.choice([1, 2])
         foreldre_liste = []
+        karriere_liste = spill_database[valgt_spill]["karrierer"]
         
-        if antall_foreldre == 2:
+        if er_universitets_verden:
+            fam_status = "Universitetsstudenter / Kollektiv 🎓"
+        elif antall_foreldre == 2:
             fam_status = "Gifte / Partnere 💍"
         else:
             fam_status = random.choice(["Alene-forelder 🧑‍👦", "Skilt / Delt omsorg ⚡"])
@@ -330,17 +393,31 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             k_kode = random.choice(["Gutt", "Jente"])
             k_tekst = "Mann 👨" if k_kode == "Gutt" else "Kvinne 👩"
             fornavn = hent_fornavn(k_kode, er_okkult, s)
-            alder = hent_voksen_alder(valgt_spill)
-            pers, _ = generer_personlighet(valgt_spill)
             
-            forelder_studie = ""
-            if alder in ["Ung voksen", "Voksen"] and random.random() < 0.25:
+            if er_universitets_verden:
+                alder = "Ung voksen"
+                forelder_jobb = "Student 📚"
                 forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
+            else:
+                if valgt_spill == "Sims 2 (Klassisk drama)" or valgt_spill == "Sims 1 (Retro/Original)":
+                    alder = random.choice(["Voksen", "Eldre"])
+                else:
+                    har_uv = spill_database[valgt_spill]["har_ung_voksen"]
+                    alder = random.choice(["Ung voksen", "Voksen", "Eldre"] if har_uv else ["Voksen", "Eldre"])
+                
+                forelder_jobb = random.choice(karriere_liste)
+                forelder_studie = ""
+                if alder in ["Ung voksen", "Voksen"] and random.random() < 0.25:
+                    forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
 
-            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers}{forelder_studie})*")
+            pers, _ = generer_personlighet(valgt_spill)
+            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *(Jobb: {forelder_jobb} | {pers}{forelder_studie})*")
 
-        # Barn
-        antall_barn = random.randint(0, 4)
+        if er_universitets_verden:
+            antall_barn = 0
+        else:
+            antall_barn = random.randint(0, 4)
+
         barn_liste = []
         for i in range(antall_barn):
             k_kode = random.choice(["Gutt", "Jente"])
@@ -353,10 +430,17 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter}{familie_okkult_tekst} ({valgt_spill})\n"
         fam_tekst += f"* **Familie-status:** {fam_status}\n\n"
         fam_tekst += "\n".join(foreldre_liste) + "\n\n"
+        
         if barn_liste:
-            fam_tekst += "**Barn inngår i husholdningen:**\n" + "\n".join(barn_liste)
+            fam_tekst += "**Barn inngår i husholdningen:**\n" + "\n".join(barn_liste) + "\n\n"
         else:
-            fam_tekst += "*Ingen barn i denne husholdningen ennå.*"
+            if er_universitets_verden and valgt_spill == "Sims 2 (Klassisk drama)":
+                fam_tekst += "*Ingen barn her (Sims 2-universitetet tillater ikke barn i studenthusholdninger).* \n\n"
+            else:
+                fam_tekst += "*Ingen barn i denne husholdningen ennå.*\n\n"
+
+        if legg_til_husdyr:
+            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst()}"
 
         st.success(fam_tekst)
         st.session_state.historikk.insert(0, f"[{valgt_spill}] Familie {felles_etter} ({antall_foreldre} voksne, {antall_barn} barn)")
