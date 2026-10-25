@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med spillspesifikke aldergrupper, okkulte typer, studier og personlighet!")
+st.write("Skap din neste sim eller familie med spillspesifikke aldersgrupper, spillkorrekte okkulte typer, studier og personlighet!")
 
 # --- NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -115,36 +115,38 @@ relasjonsstatuser = [
     "Gift 💍", 
     "Forlovet 💎", 
     "Skilt ⚡", 
-    "Det er komplisert... 🎭", 
-    "Hemmelig forelsket 💌"
+    "Det er komplisert... 🎭"
 ]
 
-okkult_typer = ["Vampyr 🦇", "Heks / Trollmann 🪄", "Romvesen 👽", "Varulv 🐺"]
 studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
 
-# --- SPILLSPESIFIKKE TREKK OG LIVSMÅL ---
+# --- SPILLSPESIFIKKE TREKK, OKKULTE TYPER OG LIVSMÅL ---
 spill_database = {
     "Sims 4 (Moderne)": {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
+        "okkulte": ["Vampyr 🦇", "Trollmann / Spellcaster 🪄", "Romvesen 👽", "Varulv 🐺", "Havfrue 🧜‍♀️", "Troll (Spellcaster) 🔮"],
         "trekk": ["Klossete", "Hissig", "Kreativ", "Lat", "Geni", "Matvrak", "Høflig", "Romantisk", "Sjenert", "Overambisiøs", "Innadvendt", "Selskapssyk"],
         "mal": ["Bli superkjendis", "Mestre matlaging", "Finne sann kjærlighet", "Kjøpe drømmehuset", "Fullføre et aspirasjonsmål"]
     },
     "Sims 3 (Åpen verden)": {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
+        "okkulte": ["Vampyr 🦇", "Heks 🪄", "Romvesen 👽", "Varulv 🐺", "Fe (Fairy) 🧚", "Zombie 🧟", "Genie (Ånd i flaske) 🧞"],
         "trekk": ["Samler", "Overfladisk", "Pyroman", "Håpløs romantiker", "Eksentrisk", "Besserwisser", "Naturist", "Drømmende", "Leken", "Kynisk"],
         "mal": ["Oppfylle en livslang drøm", "Lære alle ferdigheter", "Eie hele byen", "Se spøkelser i mausoleet", "Bli mestertyv"]
     },
     "Sims 2 (Klassisk drama)": {
         "trekk_type": "poeng",
-        "har_ung_voksen": False,  # Sims 2 har bare Ung voksen på universitetet i Uni-pakken, standard basisspill har Voksen/Eldre
+        "har_ung_voksen": False,
+        "okkulte": ["Vampyr 🦇", "Zombie 🧟", "PlantSim (Plantesim) 🌱", "Servobot (Robot) 🤖", "Heks/Trollmann 🪄"],
         "stjernetegn": ["Væren", "Tyren", "Tvillingene", "Krepsen", "Løven", "Jomfruen", "Vekten", "Skorpionen", "Skytten", "Stenbukken", "Vannmannen", "Fiskene"],
         "mal": ["Romanse (Romance)", "Kunnskap (Knowledge)", "Familie (Family)", "Formue (Fortune)", "Popularitet (Popularity)"]
     },
     "Sims 1 (Retro/Original)": {
         "trekk_type": "trekk",
         "har_ung_voksen": False,
+        "okkulte": ["Magne / Trollmann 🧙‍♂️", "Ghoul / Spøkelse 👻", "Mime / Klovn 🤡"],
         "trekk": ["Panisk for brann", "Avhengig av pizza", "Kranglevoren", "Evig uheldig", "Gjerrig", "Stuegris", "Tvangsmessig rydder"],
         "mal": ["Bli rik nok til et basseng uten stige", "Overleve spøkelsene i huset", "Få naboene til å like deg", "Kjøpe en magisk dverg", "Unngå marsvin-syken"]
     }
@@ -228,7 +230,8 @@ def hent_enkelt_navn():
     if t == "Okkult":
         etter = random.choice(okkulte_etternavn)
         spraak_tekst = "Okkult / Overnaturlig"
-        okkult_detalj = f" ({random.choice(okkult_typer)})"
+        passende_okkulte = spill_database[valgt_spill]["okkulte"]
+        okkult_detalj = f" ({random.choice(passende_okkulte)})"
     else:
         etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
         spraak_tekst = s
@@ -237,7 +240,6 @@ def hent_enkelt_navn():
     personlighet, mal = generer_personlighet(valgt_spill)
     alder = hent_voksen_alder(valgt_spill)
     
-    # Sjekk universitet (kun for ung voksen / voksen, f.eks. 30% sjanse)
     studie_info = ""
     if alder in ["Ung voksen", "Voksen"] and random.random() < 0.35:
         studie_info = f"🎓 Studerer på universitetet: **{random.choice(studieretninger)}**"
@@ -275,7 +277,8 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
 
         if t == "Okkult":
             felles_etter = random.choice(okkulte_etternavn)
-            familie_okkult_type = f" [{random.choice(okkult_typer)}]"
+            passende_okkulte = spill_database[valgt_spill]["okkulte"]
+            familie_okkult_type = f" [{random.choice(passende_okkulte)}]"
         else:
             felles_etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
             familie_okkult_type = ""
@@ -296,7 +299,6 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             alder = hent_voksen_alder(valgt_spill)
             pers, _ = generer_personlighet(valgt_spill)
             
-            # Sjekk om forelder studerer
             forelder_studie = ""
             if alder in ["Ung voksen", "Voksen"] and random.random() < 0.25:
                 forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
