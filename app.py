@@ -29,62 +29,6 @@ NAVNE_DB = {
         "jentenavn_rare": ["Hortense", "Mildred", "Agnes", "Beatrice", "Cressida", "Flementine", "Jezebel", "Persephone", "Gertrude", "Prudence", "Wilhelmina", "Tabitha", "Hephzibah", "Petunia", "Mabel", "Brunhilde", "Eunice", "Gladys", "Maude", "Pansy", "Agatha", "Winifred", "Hermione", "Cornelia", "Gwendolyn", "Blanche", "Beryl", "Enid", "Myrtle", "Opal", "Zenobia", "Clementine", "Elvira", "Morticia", "Wednesday", "Zephyra", "Ophelia", "Hexa", "Belladonna", "Raven", "Thomasin", "Araminta", "Drusilla", "Gwendolen", "Isolde", "Maudlin"],
         "etternavn": ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson", "Pancake", "Frizzled", "Doom", "Pudding", "Boots", "Waffle", "Snickerdoodle", "Bubble", "Chaos", "Spoons", "Pendelton", "Cumberbatch", "Butterworth", "Snodgrass", "Pettibone", "Hollingsworth", "Pumpernickel", "Thorn", "Winterbottom", "Sprocket", "Gasket", "Fumble", "Bumblebee", "Dingle", "Snort", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Moore", "Young", "Fluffernutter", "Snoot", "Wigglesworth", "Bumble", "Snicklefritz", "Giggle", "Skunk", "Toadstool", "Pemberton", "Fairchild", "Halloway", "Blackwood", "Sterling", "Wellington"]
     },
-    "Svenske navn": {
-        "guttenavn_normale": ["Liam", "William", "Hugo", "Noah", "Oliver", "Elias", "Arvid", "Ludvig", "Nils", "Sven", "Björn", "Lars", "Gustav", "Frej"],
-        "guttenavn_rare": ["Sture", "Folke", "Tage", "Stellan", "Kjell", "Bo", "Rune", "Yngve"],
-        "jentenavn_normale": ["Alice", "Maja", "Elsa", "Astrid", "Wilma", "Freja", "Ebba", "Saga", "Agnes", "Elin", "Ida", "Linnéa", "Lovisa", "Tove"],
-        "jentenavn_rare": ["Gunilla", "Ulla", "Birgitta", "Barbro", "Maj-Britt", "Kerstin", "Ingegerd"],
-        "etternavn": ["Andersson", "Johansson", "Karlsson", "Nilsson", "Eriksson", "Larsson", "Olsson", "Persson", "Svensson", "Lindberg", "Lindqvist", "Ström"]
-    },
-    "Danske navn": {
-        "guttenavn_normale": ["Noah", "Carl", "Lukas", "Oscar", "Alfred", "Oliver", "Valdemar", "Malthe", "Emil", "Frederik", "Søren", "Mads", "Lasse"],
-        "guttenavn_rare": ["Poul", "Holger", "Aage", "Børge", "Ejnar", "Flemming", "Preben"],
-        "jentenavn_normale": ["Alma", "Ida", "Clara", "Ella", "Freja", "Emma", "Sofia", "Agnes", "Laura", "Mette", "Nanna", "Katrine", "Lærke"],
-        "jentenavn_rare": ["Bodil", "Solveig", "Grethe", "Tove", "Else", "Rigmor", "Vibeke"],
-        "etternavn": ["Jensen", "Nielsen", "Hansen", "Pedersen", "Andersen", "Christensen", "Larsen", "Sørensen", "Rasmussen", "Jørgensen"]
-    },
-    "Franske navn": {
-        "guttenavn_normale": ["Gabriel", "Léo", "Raphaël", "Louis", "Arthur", "Jules", "Maël", "Lucas", "Adam", "Hugo", "Édouard", "Henri", "Pierre"],
-        "guttenavn_rare": ["Gaston", "Barthélemy", "Alphonse", "Célestin", "Achille", "Firmin"],
-        "jentenavn_normale": ["Jade", "Louise", "Emma", "Ambre", "Alice", "Rose", "Anna", "Chloé", "Mia", "Léa", "Camille", "Manon", "Céleste"],
-        "jentenavn_rare": ["Georgette", "Solange", "Bernadette", "Jocelyne", "Odette", "Yvonne"],
-        "etternavn": ["Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Fontaine"]
-    },
-    "Italienske navn": {
-        "guttenavn_normale": ["Leonardo", "Francesco", "Tommaso", "Edoardo", "Alessandro", "Lorenzo", "Mattia", "Gabriele", "Riccardo", "Matteo", "Giovanni"],
-        "guttenavn_rare": ["Umberto", "Vincenzo", "Gennaro", "Ottavio", "Erasmo"],
-        "jentenavn_normale": ["Sofia", "Aurora", "Giulia", "Ginevra", "Beatrice", "Alice", "Vittoria", "Emma", "Ludovica", "Matilde", "Francesca"],
-        "jentenavn_rare": ["Concetta", "Addolorata", "Bruna", "Iolanda", "Felicita"],
-        "etternavn": ["Rossi", "Russo", "Ferrari", "Esposito", "Bianchi", "Romano", "Colombo", "Ricci", "Marino", "Greco", "Bruno"]
-    },
-    "Spanske navn": {
-        "guttenavn_normale": ["Hugo", "Mateo", "Martin", "Lucas", "Leo", "Daniel", "Alejandro", "Manuel", "Pablo", "Álvaro", "Carlos", "Diego"],
-        "guttenavn_rare": ["Fulgencio", "Eusebio", "Primitivo", "Eleuterio", "Hermenegildo"],
-        "jentenavn_normale": ["Lucía", "Sofía", "Martina", "María", "Julia", "Paula", "Valeria", "Emma", "Daniela", "Carla", "Alba", "Carmen"],
-        "jentenavn_rare": ["Encarnación", "Agustina", "Candelaria", "Eufemia", "Trinidad"],
-        "etternavn": ["García", "Rodríguez", "González", "Fernández", "López", "Martínez", "Sánchez", "Pérez", "Gómez", "Torres"]
-    },
-    "Tyske navn": {
-        "guttenavn_normale": ["Noah", "Matteo", "Finn", "Leon", "Elias", "Paul", "Ben", "Luca", "Emil", "Louis", "Felix", "Maximilian", "Otto"],
-        "guttenavn_rare": ["Wilhelm", "Heinrich", "Friedrich", "Gottlieb", "Gunther", "Manfred"],
-        "jentenavn_normale": ["Emilia", "Mia", "Sophia", "Emma", "Hannah", "Lina", "Mila", "Ella", "Leni", "Clara", "Greta", "Johanna"],
-        "jentenavn_rare": ["Brunhilde", "Gertrud", "Gisela", "Irmgard", "Waltraud", "Heidelinde"],
-        "etternavn": ["Müller", "Schmidt", "Schneider", "Fischer", "Weber", "Meyer", "Wagner", "Becker", "Schulz", "Hoffmann"]
-    },
-    "Japanske navn": {
-        "guttenavn_normale": ["Ren", "Haruto", "Minato", "Yuma", "Sota", "Kenji", "Hiroshi", "Takumi", "Kaito", "Daiki", "Ryota"],
-        "guttenavn_rare": ["Genji", "Toshio", "Kiyoshi", "Saburo", "Jiro"],
-        "jentenavn_normale": ["Himari", "Hina", "Yua", "Sakura", "Akari", "Mei", "Aoi", "Rin", "Kiko", "Yoko", "Hana"],
-        "jentenavn_rare": ["Chiyo", "Fumiko", "Katsuko", "Shizuka", "Tomoko"],
-        "etternavn": ["Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto", "Nakamura", "Kobayashi", "Kato"]
-    },
-    "Koreanske navn": {
-        "guttenavn_normale": ["Seojun", "Ha-joon", "Do-yun", "Eun-woo", "Ji-ho", "Min-jun", "Yu-jun", "Jung-woo", "Hyun", "Seok"],
-        "guttenavn_rare": ["Dae-sung", "Sang-wook", "Byung-hee", "Man-bok"],
-        "jentenavn_normale": ["Ji-an", "Ha-rin", "Seo-ah", "Seo-yun", "Ji-woo", "Min-seo", "Ha-eun", "Yuna", "Soo-jin", "Chae-won"],
-        "jentenavn_rare": ["Young-soon", "Sun-ja", "Geum-hee", "Bong-soon"],
-        "etternavn": ["Kim", "Lee", "Park", "Choi", "Jung", "Kang", "Cho", "Yoon", "Jang", "Lim"]
-    },
     "Fantasy & Magiske navn": {
         "guttenavn_normale": ["Vladislaus", "Malakor", "Zephyr", "Astaroth", "Lucifer", "Asmodeus", "Mortis", "Oberon", "Thorne", "Ignis", "Solomon"],
         "guttenavn_rare": ["Zod", "Azazel", "Mephisto", "Xylar", "Nebula"],
@@ -113,37 +57,175 @@ DYRENAVN = {
 DYRE_TREKK = ["Leken 🎾", "Lat 😴", "Aggressiv 💢", "Kosete ❤️", "Uavhengig 🐾", "Fryktsom 💨", "Nysgjerrig 🔍"]
 
 spill_database = {
-    "Sims 4 (Moderne)": {
+    # Eksisterende utvidelser
+    "Sims 4: Get to Work": {
         "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
-        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴 (Horse Ranch)", "Lite kjæledyr 🐹"],
-        "okkulte": ["Vampyr 🦇", "Trollmann 🪄", "Romvesen 👽", "Varulv 🐺", "Havfrue 🧜‍♀️", "PlantSim 🌱"],
-        "karrierer": ["Astronaut", "Kokk", "Kriminell", "Forretningsmann", "Underholder", "Forfatter", "Idrettsutøver", "Hemmelig agent", "Stilist", "Forsker"],
-        "trekk": ["Klossete", "Hissig", "Kreativ", "Lat", "Geni", "Matvrak", "Høflig", "Romantisk", "Sjenert", "Overambisiøs"],
-        "mal": ["Bli superkjendis", "Mestre matlaging", "Finne sann kjærlighet", "Kjøpe drømmehuset", "Fullføre et aspirasjonsmål"]
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Læge", "Detektiv", "Forsker", "Detaljist"],
+        "trekk": ["Aktiv", "Vitenskapelig", "Klossete"],
+        "mal": ["Mestre vitenskapen", "Bli mesterdetektiv"]
     },
-    "Sims 3 (Åpen verden)": {
+    "Sims 4: Get Together": {
         "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
-        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴 (Sims 3: Pets)", "Lite kjæledyr 🐹"],
-        "okkulte": ["Vampyr 🦇", "Heks 🪄", "Romvesen 👽", "Varulv 🐺", "Fe 🧚", "Zombie 🧟", "Genie 🧞"],
-        "karrierer": ["Arkitekt", "Spøkelsesjeger", "Privatetterforsker", "Musiker", "Politiet", "Medisin", "Politiker", "Militæret", "Journalistikk", "Idrett"],
-        "trekk": ["Samler", "Overfladisk", "Pyroman", "Håpløs romantiker", "Eksentrisk", "Besserwisser", "Drømmende"],
-        "mal": ["Oppfylle en livslang drøm", "Lære alle ferdigheter", "Eie hele byen", "Se spøkelser i mausoleet"]
-    },
-    "Sims 2 (Klassisk drama)": {
-        "trekk_type": "poeng", "har_ung_voksen": False, "kan_studere": True,
         "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
-        "okkulte": ["Vampyr 🦇", "Zombie 🧟", "PlantSim 🌱", "Servobot 🤖", "Heks 🪄"],
-        "karrierer": ["Leker (Toymaking)", "Showbusiness", "Paranormal", "Nattevakt", "Politiet", "Medisin", "Militæret"],
-        "stjernetegn": ["Væren", "Tyren", "Tvillingene", "Krepsen", "Løven", "Jomfruen", "Vekten", "Skorpionen", "Skytten", "Stenbukken", "Vannmannen", "Fiskene"],
-        "mal": ["Romanse", "Kunnskap", "Familie", "Formue", "Popularitet"]
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "DJ", "Barista", "Klubbleder"],
+        "trekk": ["Sosial", "Musikalsk", "Danseglad"],
+        "mal": ["Starte den beste klubben"]
     },
-    "Sims 1 (Retro/Original)": {
-        "trekk_type": "trekk", "har_ung_voksen": False, "kan_studere": False,
+    "Sims 4: City Living": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
         "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
-        "okkulte": ["Magiker 🧙‍♂️", "Spøkelse 👻", "Mime/Klovn 🤡"],
-        "karrierer": ["Forretningsliv", "Mote", "Musikk", "Politiet", "Militæret", "Medisin", "Arbeidsledig"],
-        "trekk": ["Panisk for brann", "Avhengig av pizza", "Kranglevoren", "Evig uheldig", "Gjerrig", "Stuegris"],
-        "mal": ["Bli rik nok til et basseng uten stige", "Overleve spøkelsene i huset", "Få naboene til å like deg", "Kjøpe en magisk dverg"]
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Politiker", "Kritiker", "Sosiale medier"],
+        "trekk": ["Kulturinteressert", "Matglad", "Bydiamant"],
+        "mal": ["Bli byens politiker"]
+    },
+    "Sims 4: Cats & Dogs": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Veterinær"],
+        "trekk": ["Dyrevenn", "Omtenksom", "Aktiv"],
+        "mal": ["Åpne den beste dyreklinikken"]
+    },
+    "Sims 4: Seasons": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽", "PlantSim 🌱"],
+        "karrierer": ["Konge / Monark 👑", "Botaniker", "Gartner"],
+        "trekk": ["Elsker kulden", "Elsker varmen", "Naturglad"],
+        "mal": ["Mestre alle årstidens høytider"]
+    },
+    "Sims 4: Get Famous": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Skuespiller", "Influenser"],
+        "trekk": ["Amisiøs", "Snobbete", "Kjendisgal"],
+        "mal": ["Bli en verdensberømt superkjendis"]
+    },
+    "Sims 4: Island Living": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Havfrue 🧜‍♀️", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Miljøarbeider", "Livredder", "Fisker"],
+        "trekk": ["Barn av havet", "Avslappet", "Solbrun"],
+        "mal": ["Beskytt øyas natur og kultur"]
+    },
+    "Sims 4: Discover University": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Ingeniør", "Advokat", "Professor"],
+        "trekk": ["Akademisk", "Stresset", "Strukturert"],
+        "mal": ["Graduer med toppkarakterer"]
+    },
+    "Sims 4: Eco Lifestyle": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Sivilforsker", "Skaper / Håndverker"],
+        "trekk": ["Miljøbevisst", "Gjenvinner", "Samler"],
+        "mal": ["Gjør hele nabolaget grønt"]
+    },
+    "Sims 4: Snowy Escape": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Lønnsslave", "Turistguide"],
+        "trekk": ["Eventyrlysten", "Ekstrem", "Harmonisk"],
+        "mal": ["Mestre alle fjellløyper"]
+    },
+    "Sims 4: Cottage Living": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Gårdbruker", "Landsbyperson"],
+        "trekk": ["Dyrevenn", "Selvforsynt", "Hjemmekjær"],
+        "mal": ["Lev det perfekte gårds- og landsbylivet"]
+    },
+    "Sims 4: High School Years": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Elev", "Streamer (Deltid)"],
+        "trekk": ["Tenåringsopprør", "Populær", "Usikker"],
+        "mal": ["Bli skolemester og prom-konge/-dronning"]
+    },
+    "Sims 4: Growing Together": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Familieleder", "Hjemmearbeider"],
+        "trekk": ["Familiekjær", "Støttende", "Omgjengelig"],
+        "mal": ["Bygg en sammensveiset storfamilie"]
+    },
+    "Sims 4: Horse Ranch": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Hstetrener", "Ranch-eier"],
+        "trekk": ["Hsteglad", "Utefugl", "Hardtarbeidende"],
+        "mal": ["Vinnmesterskap i hestesport"]
+    },
+    "Sims 4: For Rent": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Utleier", "Eiendomsmegler"],
+        "trekk": ["Forretningsorientert", "Nysgjerrig", "Krevende"],
+        "mal": ["Eie og administrere hele nabolaget"]
+    },
+    "Sims 4: Lovestruck": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Romantisk konsulent", "Matchmaker"],
+        "trekk": ["Romantisk", "Flørtende", "Kresen"],
+        "mal": ["Finn den store kjærligheten og opplev alt"]
+    },
+    "Sims 4: Life & Death": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Spøkelse 👻", "Grim Reaper-lærling", "Vampyr 🦇"],
+        "karrierer": ["Konge / Monark 👑", "Begravelsesagent", "Sjelevandrer", "Nekromantiker"],
+        "trekk": ["Fascinert av døden", "Melankolsk", "Vis"],
+        "mal": ["Løs livets og dødens store mysterier"]
+    },
+    # Nye tillegg fra listen din
+    "Sims 4: Businesses & Hobbies": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Vampyr 🦇", "Romvesen 👽"],
+        "karrierer": ["Konge / Monark 👑", "Bedriftsgründer", "Hobbyentreprenør", "Markedssjef"],
+        "trekk": ["Håndverker", "Innovativ", "Beregnet"],
+        "mal": ["Bygg opp en suksessfull forretningsimperium fra bunnen"]
+    },
+    "Sims 4: Enchanted by Nature": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Offisiell/Natur)", "PlantSim 🌱", "Druide", "Vampyr 🦇"],
+        "karrierer": ["Konge / Monark 👑", "Skogvokter", "Naturforsker", "Urtekrankser"],
+        "trekk": ["Ett med naturen", "Magi-tiltrukket", "Vilt blod"],
+        "mal": ["Beherske skogens eldgamle hemmeligheter"]
+    },
+    "Sims 4: Adventure Awaits": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Utforsker", "Vampyr 🦇"],
+        "karrierer": ["Konge / Monark 👑", "Arkeolog", "Skattejeger", "Ekspedisjonsleder"],
+        "trekk": ["Fryktløs", "Nysgjerrig", "Reiseglad"],
+        "mal": ["Finn verdens glemte skatter og tapte ruiner"]
+    },
+    "Sims 4: Royalty & Legacy": {
+        "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
+        "husdyr_mulige": ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr 🐹"],
+        "okkulte": ["Fe 🧚 (Mod)", "Kongelig Blod 👑", "Vampyr 🦇"],
+        "karrierer": ["Høykonge / Monark 👑", "Kronprins(esse) 👑", "Statsminister", "Hoffsjef", "Diplomat"],
+        "trekk": ["Kongelig verdighet", "Autoritær", "Stolt", "Diplomatisk"],
+        "mal": ["Etabler et mektig dynasti og hersk over riket i generasjoner"]
     }
 }
 
@@ -189,7 +271,7 @@ valgt_fane = st.sidebar.radio("⚙️ Konfigurasjon", [
 ])
 
 st.sidebar.markdown("---")
-valgt_spill = st.sidebar.selectbox("Velg Sims-versjon:", list(spill_database.keys()))
+valgt_spill = st.sidebar.selectbox("Velg Sims-versjon / Utvidelse:", list(spill_database.keys()))
 
 kat_lister = list(NAVNE_DB.keys())
 valgt_kategori = st.sidebar.selectbox("Navnekategori / Nasjonalitet:", ["🎲 Helt tilfeldig (Bland alt)"] + kat_lister)
@@ -212,12 +294,8 @@ legg_til_okonomi = st.sidebar.checkbox("💰 Inkluder startøkonomi (§)?", valu
 
 def generer_personlighet(spill_navn):
     data = spill_database[spill_navn]
-    if data["trekk_type"] == "poeng":
-        tegn = random.choice(data["stjernetegn"])
-        return f"Stjernetegn: **{tegn}** | Rotete: {random.randint(1,10)}/10", random.choice(data["mal"])
-    else:
-        trekk = random.sample(data["trekk"], min(2, len(data["trekk"])))
-        return f"{trekk[0]} og {trekk[1]}", random.choice(data["mal"])
+    trekk = random.sample(data["trekk"], min(2, len(data["trekk"])))
+    return f"{trekk[0]} og {trekk[1]}", random.choice(data["mal"])
 
 def sjekk_og_hent_okkult_status(modus_valg, spill_navn):
     mulige_okkulte = spill_database[spill_navn]["okkulte"]
@@ -289,7 +367,7 @@ def hent_okonomi(antall):
 
 if valgt_fane == "🎲 Generer Sim / Familie":
     st.title("🎮 Ultimate Sims Navnegenerator")
-    st.write("Skap din neste sim eller familie med spilltrofaste aldersregler, kjæledyr, karrierer og bakgrunnshistorie!")
+    st.write("Skap din neste sim eller familie med alle utvidelser, feer, kongelige titler, kjæledyr og bakgrunnshistorier!")
     
     modus = st.radio("Modus:", ["Enkeltsim", "Familie (Dynamisk antall barn & alder)"], horizontal=True)
 
@@ -300,11 +378,8 @@ if valgt_fane == "🎲 Generer Sim / Familie":
             fn, en = hent_navn_komplett(valgt_kategori, valgt_kjonn, er_o, valgt_navnetype)
             personlighet, mal = generer_personlighet(valgt_spill)
             
-            kan_studere = spill_database[valgt_spill]["kan_studere"]
-            er_paa_uni = kan_studere and random.random() < 0.35
-            
-            alder = "Voksen" if valgt_spill == "Sims 1 (Retro/Original)" else ("Ung voksen" if er_paa_uni else random.choice(["Ung voksen", "Voksen", "Eldre"]))
-            karriere = "Fulltidsstudent 📚" if er_paa_uni else random.choice(spill_database[valgt_spill]["karrierer"])
+            alder = random.choice(["Ung voksen", "Voksen", "Eldre"])
+            karriere = random.choice(spill_database[valgt_spill]["karrierer"])
             budsjett = hent_okonomi(1) if legg_til_okonomi else None
             fullt_navn = f"{fn} {en}"
 
@@ -317,7 +392,7 @@ if valgt_fane == "🎲 Generer Sim / Familie":
             if legg_til_husdyr:
                 historie_bio += f"\n\nBor sammen med et kjæledyr: {hent_husdyr_tekst(valgt_spill, valgt_dyreart)}"
 
-            res = f"### 🧑 {fullt_navn}\n* **Type:** {o_type}\n* **Alder:** {alder}\n* **Karriere / Jobb:** {karriere}\n"
+            res = f"### 🧑 {fullt_navn}\n* **Type:** {o_type}\n* **Alder:** {alder}\n* **Karriere / Jobb / Tittel:** {karriere}\n"
             if budsjett:
                 res += f"* **Startbudsjett:** {budsjett}\n"
             res += f"* **Personlighet:** {personlighet}\n* **Livsmål / Ambisjon:** {mal}"
@@ -339,7 +414,7 @@ if valgt_fane == "🎲 Generer Sim / Familie":
         else:
             _, felles_etter = hent_navn_komplett(valgt_kategori, "Begge", er_o, valgt_navnetype)
             antall_foreldre = random.randint(1, 2)
-            antall_barn = 0 if valgt_spill == "Sims 1 (Retro/Original)" else random.randint(0, 4)
+            antall_barn = random.randint(0, 4)
             budsjett = hent_okonomi(antall_foreldre + antall_barn) if legg_til_okonomi else None
 
             foreldre_tekst_liste = []
@@ -367,14 +442,14 @@ if valgt_fane == "🎲 Generer Sim / Familie":
                 pers, _ = generer_personlighet(valgt_spill)
                 karriere = random.choice(spill_database[valgt_spill]["karrierer"])
                 
-                st.write(f"* **Forelder {i+1} [{f_o_type}]:** {fn} {felles_etter} *(Jobb: {karriere} | {pers})*")
-                foreldre_tekst_liste.append(f"- Forelder {i+1} [{f_o_type}]: {fn} {felles_etter} (Jobb: {karriere} | {pers})")
+                st.write(f"* **Forelder {i+1} [{f_o_type}]:** {fn} {felles_etter} *(Karriere/Tittel: {karriere} | {pers})*")
+                foreldre_tekst_liste.append(f"- Forelder {i+1} [{f_o_type}]: {fn} {felles_etter} (Karriere/Tittel: {karriere} | {pers})")
 
             barn_tekst_liste = []
             for i in range(antall_barn):
                 b_er_o, b_o_type = sjekk_og_hent_okkult_status(okkult_modus, valgt_spill)
                 fn, _ = hent_navn_komplett(valgt_kategori, valgt_kjonn, b_er_o, valgt_navnetype)
-                barn_alder = "Barn" if valgt_spill == "Sims 1 (Retro/Original)" else random.choice(barn_aldre)
+                barn_alder = random.choice(barn_aldre)
                 pers, mal = generer_personlighet(valgt_spill)
                 
                 st.write(f"* **Barn {i+1} [{b_o_type}] ({barn_alder}):** {fn} {felles_etter} *({pers} — Mål: {mal})*")
@@ -446,10 +521,10 @@ elif valgt_fane == "⭐ Favoritter":
 elif valgt_fane == "📜 Historikk":
     st.header("📜 Historikk")
     if not st.session_state.historikk:
-        st.info("Ingen historikk.")
+        st.info("Historikken er tom.")
     else:
         for item in st.session_state.historikk[:20]:
             st.write(f"* {item}")
-        if st.button("🗑️ Tøm"):
+        if st.button("🗑️ Tøm historikk"):
             st.session_state.historikk = []
             st.rerun()
