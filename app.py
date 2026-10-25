@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, karrierer, startøkonomi og en fyldig bakgrunnshistorie!")
+st.write("Skap din neste sim eller familie med spilltrofaste aldersregler (kun Voksen og Barn for Sims 1), kjæledyr, karrierer og startøkonomi!")
 
 # --- UTVIDEDE NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -151,7 +151,7 @@ hvordan_mottets = [
 
 rare_hendelser_enkelt = [
     "Presterte engang å brenne ned hele kjøkkenet mens vedkommende prøvde å smøre en brødskive.",
-    "Bli en gang bortført av romvesener mitt på natten, og kom tilbake med en ubendig trang til å lære sjakk.",
+    "Ble en gang bortført av romvesener mitt på natten, og kom tilbake med en ubendig trang til å lære sjakk.",
     "Har en hemmelig vane med å snakke med hagegnomer når ingen andre ser på.",
     "Ble en gang låst inne i et rom fordi noen glemte å bygge en dør.",
     "Er overbevist om at huset deres er besøkt av et spøkelse som konstant flytter på tøflene.",
@@ -160,7 +160,7 @@ rare_hendelser_enkelt = [
 
 rare_hendelser_fam = [
     "Hele familien ble en gang kastet ut av den lokale parken etter at barna prøvde å selge usynlig saft.",
-    "Foreldrene har en intern avtale om å aldri snakke om den gangen de kom til å fjerne steigen fra bassenget mens naboen svømte.",
+    "Foreldrene har en intern avtale om å aldri snakke om den gangen de kom til å fjerne stigen fra bassenget mens naboen svømte.",
     "Huset deres lukter kanskje konstant av brent pizza, men sammen holder de humøret oppe uansett.",
     "Det ryktes i nabolaget at familien har gjemt en skatt under rådhuset, men ingen tør å spørre dem.",
     "Familien har en ubrytelig tradisjon om å danse panisk hver gang det begynner å regne."
@@ -170,7 +170,7 @@ dynamikk_liste = [
     "Familien kjennetegnes av høyt konfliktnivå ved middagsbordet, men de stiller alltid opp for hverandre når det gjelder.",
     "Husholdningen er preget av kaos og kreativt rot, hvor alle gjør akkurat som de selv vil.",
     "Dette er en svært ambisiøs og strukturert familie som planlegger hver minste detalj av hverdagen.",
-    "En rolig og harmonize husholdning hvor hovedfokuset er å nyte livet og ta ting som det kommer."
+    "En rolig og harmonisk husholdning hvor hovedfokuset er å nyte livet og ta ting som det kommer."
 ]
 
 # --- SPILLSPESIFIKKE DATA ---
@@ -256,7 +256,7 @@ valgt_spraak = st.sidebar.selectbox("Velg språk:", ["Begge", "Norsk", "Engelsk"
 valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt / Mann", "Jente / Kvinne"])
 valgt_type = st.sidebar.selectbox("Velg navnetype:", ["Begge", "Normale", "Rare & gøye"])
 
-# --- NYE VALG I SIDESTOLPE ---
+# --- OKKULT & HUSDYR ---
 st.sidebar.markdown("---")
 er_okkult = st.sidebar.checkbox("🦇 Er okkult sim?", value=False)
 valgt_okkult_type = None
@@ -265,8 +265,12 @@ if er_okkult:
     valgt_okkult_type = st.sidebar.selectbox("Velg okkult-type:", ["Tilfeldig okkult"] + tilgjengelige_okkulte)
 
 legg_til_husdyr = st.sidebar.checkbox("🐾 Legg til husdyr (Pets)?", value=False)
-legg_til_okonomi = st.sidebar.checkbox("💰 Inkluder startøkonomi (§)?", value=True)
+valgt_dyreart = "🎲 Tilfeldig dyr"
+if legg_til_husdyr:
+    tilgjengelige_dyr = spill_database[valgt_spill]["husdyr"]
+    valgt_dyreart = st.sidebar.selectbox("Velg dyreart:", ["🎲 Tilfeldig dyr"] + tilgjengelige_dyr)
 
+legg_til_okonomi = st.sidebar.checkbox("💰 Inkluder startøkonomi (§)?", value=True)
 full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
 
 def generer_personlighet(spill_navn):
@@ -301,9 +305,12 @@ def hent_fornavn(kjonn_kode, er_ok, spraak):
         else:
             return random.choice(engelske_jentenavn_normale if valgt_type != "Rare & gøye" else engelske_jentenavn_rare)
 
-def hent_husdyr_tekst(spill):
+def hent_husdyr_tekst(spill, valgt_art):
     mulige_arter = spill_database[spill]["husdyr"]
-    art = random.choice(mulige_arter)
+    if valgt_art == "🎲 Tilfeldig dyr":
+        art = random.choice(mulige_arter)
+    else:
+        art = valgt_art
     
     if "Hund" in art:
         dyre_navn = random.choice(hundehun_navn + hundehun_jente)
@@ -372,10 +379,11 @@ def hent_enkelt_navn():
     karriere_liste = spill_database[valgt_spill]["karrierer"]
     karriere = random.choice(karriere_liste) if not er_paa_universitet else "Fulltidsstudent 📚"
 
-    if valgt_spill == "Sims 2 (Klassisk drama)":
+    # Aldersregler basert på spill
+    if valgt_spill == "Sims 1 (Retro/Original)":
+        alder = "Voksen"  # Sims 1 har kun Voksen for voksne simmer
+    elif valgt_spill == "Sims 2 (Klassisk drama)":
         alder = "Ung voksen" if er_paa_universitet else random.choice(["Voksen", "Eldre"])
-    elif valgt_spill == "Sims 1 (Retro/Original)":
-        alder = random.choice(["Voksen", "Eldre"])
     else:
         if er_paa_universitet:
             alder = "Ung voksen"
@@ -406,7 +414,6 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
         
-        # Generer bio-historie
         sart_hendelse = random.choice(rare_hendelser_enkelt)
         historie_bio = f"{sim['navn']} lever et innholdsrikt liv som {sim['alder'].lower()}. "
         historie_bio += f"Arbeider for tiden som {sim['karriere']}. "
@@ -414,7 +421,8 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         historie_bio += f"Sært trekk / hendelse fra fortiden:\n- {sart_hendelse}"
         
         if legg_til_husdyr:
-            historie_bio += f"\n\nBor sammen med et kjæledyr: {hent_husdyr_tekst(valgt_spill)}"
+            husdyr_tekst_streng = hent_husdyr_tekst(valgt_spill, valgt_dyreart)
+            historie_bio += f"\n\nBor sammen med et kjæledyr: {husdyr_tekst_streng}"
 
         resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n* **Karriere / Jobb:** {sim['karriere']}\n"
         if sim['studie']:
@@ -424,7 +432,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
         
         if legg_til_husdyr:
-            resultat_tekst += f"\n* {hent_husdyr_tekst(valgt_spill)}"
+            resultat_tekst += f"\n* {hent_husdyr_tekst(valgt_spill, valgt_dyreart)}"
 
         st.success(resultat_tekst)
         
@@ -472,7 +480,9 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                 forelder_jobb = "Student 📚"
                 forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
             else:
-                if valgt_spill == "Sims 2 (Klassisk drama)" or valgt_spill == "Sims 1 (Retro/Original)":
+                if valgt_spill == "Sims 1 (Retro/Original)":
+                    alder = "Voksen"
+                elif valgt_spill == "Sims 2 (Klassisk drama)":
                     alder = random.choice(["Voksen", "Eldre"])
                 else:
                     har_uv = spill_database[valgt_spill]["har_ung_voksen"]
@@ -499,11 +509,16 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             k_kode = random.choice(["Gutt", "Jente"])
             k_tekst = "Gutt 👦" if k_kode == "Gutt" else "Jente 👧"
             fornavn = hent_fornavn(k_kode, er_okkult, s)
-            alder = random.choice(barn_aldre)
+            
+            # Sims 1 har kun "Barn" som barne-alder (ingen babyer/småbarn/tenåringer)
+            if valgt_spill == "Sims 1 (Retro/Original)":
+                alder = "Barn"
+            else:
+                alder = random.choice(barn_aldre)
+                
             pers, mal = generer_personlighet(valgt_spill)
             barn_liste.append(f"**Barn {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
 
-        # Generer familie-bio
         mote_historie = f"De voksne i husholdningen ({' og '.join(foreldre_navn_kun)}) {random.choice(hvordan_mottets)}." if antall_foreldre > 1 else f"{foreldre_navn_kun[0]} starter et nytt kapittel på egenhånd."
         fam_dynamikk = random.choice(dynamikk_liste)
         fam_sært = random.choice(rare_hendelser_fam)
@@ -517,7 +532,8 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         bio_tekst += f"Sær hendelse i familiens fortid:\n{fam_sært}\n"
         
         if legg_til_husdyr:
-            bio_tekst += f"\nHusdyr i familien: {hent_husdyr_tekst(valgt_spill)}\n"
+            husdyr_tekst_streng = hent_husdyr_tekst(valgt_spill, valgt_dyreart)
+            bio_tekst += f"\nHusdyr i familien: {husdyr_tekst_streng}\n"
 
         fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter}{familie_okkult_tekst} ({valgt_spill})\n"
         fam_tekst += f"* **Familie-status:** {fam_status}\n"
@@ -534,7 +550,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                 fam_tekst += "*Ingen barn i denne husholdningen ennå.*\n\n"
 
         if legg_til_husdyr:
-            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst(valgt_spill)}"
+            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst(valgt_spill, valgt_dyreart)}"
 
         st.success(fam_tekst)
         
