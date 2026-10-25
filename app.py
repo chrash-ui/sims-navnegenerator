@@ -131,7 +131,7 @@ spill_database = {
         "karrierer": ["Astronaut", "Kokk", "Kriminell", "Forretningsmann", "Underholder", "Forfatter", "Idrettsutøver", "Hemmelig agent", "Stilist", "Forsker"],
         "trekk": ["Klossete", "Hissig", "Kreativ", "Lat", "Geni", "Matvrak", "Høflig", "Romantisk", "Sjenert", "Overambisiøs"],
         "mal": ["Bli superkjendis", "Mestre matlaging", "Finne sann kjærlighet", "Kjøpe drømmehuset", "Fullføre et aspirasjonsmål"],
-        "verdener": ["Willow Creek", "Oasis Springs", "Newcrest", "Forgotten Hollow", "Glimmerbrook", "Strangerville", "Moonwood Mill"]
+        "verdener": ["Willow Creek", "Oasis Springs", "Newcrest", "Forgotten Hollow", "Glimmerbrook", "Strangerville", "Batuu", "Moonwood Mill"]
     },
     "Sims 3 (Åpen verden)": {
         "trekk_type": "trekk", "har_ung_voksen": True, "kan_studere": True,
@@ -276,13 +276,17 @@ def hent_verden_tekst(spill_navn, valgt_v):
 
 def generer_personlighet(spill_navn):
     base_data = spill_database[spill_navn]
-    mulige_trekk = list(set(base_data["trekk"] + aktive_pakker_trekk))
-    mulige_mal = list(set(base_data["mal"] + aktive_pakker_mal))
     
-    if base_data["trekk_type"] == "poeng":
+    if base_data.get("trekk_type") == "poeng":
         tegn = random.choice(base_data["stjernetegn"])
+        mulige_mal = base_data.get("mal", ["Romanse", "Kunnskap"])
         return f"Stjernetegn: **{tegn}** | Rotete: {random.randint(1,10)}/10", random.choice(mulige_mal)
     else:
+        base_trekk = base_data.get("trekk", ["Klossete", "Kreativ"])
+        mulige_trekk = list(set(base_trekk + aktive_pakker_trekk))
+        base_mal = base_data.get("mal", ["Mestre matlaging"])
+        mulige_mal = list(set(base_mal + aktive_pakker_mal))
+        
         trekk = random.sample(mulige_trekk, min(2, len(mulige_trekk)))
         return f"{trekk[0]} og {trekk[1]}", random.choice(mulige_mal)
 
