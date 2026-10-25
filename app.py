@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med utvidede navnelister, kjæledyr med egne navn, karrierer og spillspesifikke regler!")
+st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr og dyretrekk, utvidede navnelister og karrierer!")
 
 # --- UTVIDEDE NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -99,7 +99,7 @@ hundehun_navn = ["Buster", "Karo", "Rex", "Balder", "Bruno", "Rambo", "Theo", "B
 hundehun_jente = ["Bella", "Luna", "Ayla", "Maja", "Mira", "Stella", "Freia", "Zelda", "Daisy", "Saga", "Ronja", "Nala"]
 katt_navn = ["Pusur", "Milling", "Fjonken", "Felix", "Socks", "Tiger", "Simba", "Oliver", "Nils", "Laban"]
 katt_jente = ["Missen", "Nala", "Cleo", "Sassy", "Minni", "Pia", "Siri", "Lily"]
-hest_navn = ["Storm", "Faksen", "Spirit", "Gorm", "Thunder", "Cinderella", "Varg", "Dronning", "Blakkken", "Star"]
+hest_navn = ["Storm", "Faksen", "Spirit", "Gorm", "Thunder", "Cinderella", "Varg", "Dronning", "Blakken", "Star"]
 lite_dyr_navn = ["Pip", "Squeak", "Nøtteliten", "Gnagern", "Smule", "Pompel", "Pilt", "Fjonken", "Snickers"]
 
 etternavn_norske = [
@@ -138,15 +138,15 @@ relasjonsstatuser = [
 ]
 
 studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
-dyre_arter = ["Hund 🐶", "Katt 🐱", "Hest 🐴", "Lite kjæledyr (Fugl/Gnager) 🐹"]
-dyre_trekk = ["Leken 🎾", "Lat 😴", "Aggressiv 💢", "Kosete ❤️", "Uavhengig 🐾", "Fryktsom 💨", "Nysgjerrig 🔍"]
 
-# --- SPILLSPESIFIKKE DATA ---
+# --- SPILLSPESIFIKKE DATA (MED TILPASSEDE HUSDYR OG DYRETREKK) ---
 spill_database = {
     "Sims 4 (Moderne)": {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
         "kan_studere": True,
+        "husdyr": ["Hund 🐶", "Katt 🐱", "Hest 🐴 (Horse Ranch)", "Lite kjæledyr (Gnager/Fugl) 🐹"],
+        "dyre_trekk": ["Leken 🎾", "Lat 😴", "Aggressiv 💢", "Kosete ❤️", "Uavhengig 🐾", "Fryktsom 💨", "Nysgjerrig 🔍", "Troublemaker 😈", "Aktiv ⚡"],
         "okkulte": [
             "Vampyr 🦇 (Sims 4: Vampires)", 
             "Trollmann / Spellcaster 🪄 (Sims 4: Realm of Magic)", 
@@ -163,6 +163,8 @@ spill_database = {
         "trekk_type": "trekk",
         "har_ung_voksen": True,
         "kan_studere": True,
+        "husdyr": ["Hund 🐶", "Katt 🐱", "Hest 🐴 (Sims 3: Pets)", "Lite kjæledyr (Fugl/Krypdyr/Gnager) 🐹"],
+        "dyre_trekk": ["Aggressiv 💢", "Eventyrlysten 🧭", "Uavhengig 🐾", "Lat 😴", "Stolt 👑", "Leken 🎾", "Destruktiv 💥", "Jeger 🎯", "Skittgris 🐷", "Nervøs 🫨"],
         "okkulte": [
             "Vampyr 🦇 (Sims 3: Late Night / Supernatural)", 
             "Heks / Warlock 🪄 (Sims 3: Supernatural)", 
@@ -180,6 +182,8 @@ spill_database = {
         "trekk_type": "poeng",
         "har_ung_voksen": False,
         "kan_studere": True,
+        "husdyr": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr (Fugl / Marsvin) 🐹"],
+        "dyre_trekk": ["Vennlig 😊", "Kranglevoren 😾", "Aktiv ⚡", "Lat 😴", "Uavhengig 🐾", "Krevende 💅", "Leken 🎾", "Støyende 📢"],
         "okkulte": [
             "Vampyr 🦇 (Sims 2: Nightlife)", 
             "Zombie 🧟 (Sims 2: University)", 
@@ -195,6 +199,8 @@ spill_database = {
         "trekk_type": "trekk",
         "har_ung_voksen": False,
         "kan_studere": False,
+        "husdyr": ["Hund 🐶", "Katt 🐱", "Lite kjæledyr (Fugl / Iguana) 🐹"],
+        "dyre_trekk": ["Stuegris 🐷", "Høytlytt 📢", "Destruktiv 💥", "Kosete ❤️", "Uavhengig 🐾", "Kranglevoren 😾"],
         "okkulte": [
             "Magiker / Trollmann 🧙‍♂️ (Sims 1: Makin' Magic)", 
             "Ghoul / Spøkelse 👻 (Sims 1: Livin' Large)", 
@@ -260,8 +266,10 @@ def hent_fornavn(kjonn_kode, er_ok, spraak):
         else:
             return random.choice(engelske_jentenavn_normale if valgt_type != "Rare & gøye" else engelske_jentenavn_rare)
 
-def hent_husdyr_tekst():
-    art = random.choice(dyre_arter)
+def hent_husdyr_tekst(spill):
+    mulige_arter = spill_database[spill]["husdyr"]
+    art = random.choice(mulige_arter)
+    
     if "Hund" in art:
         dyre_navn = random.choice(hundehun_navn + hundehun_jente)
     elif "Katt" in art:
@@ -271,7 +279,8 @@ def hent_husdyr_tekst():
     else:
         dyre_navn = random.choice(lite_dyr_navn)
         
-    trekk = random.choice(dyre_trekk)
+    mulige_dyre_trekk = spill_database[spill]["dyre_trekk"]
+    trekk = random.choice(mulige_dyre_trekk)
     return f"🐾 **Husdyr:** {dyre_navn} ({art}) — *Trekk: {trekk}*"
 
 def hent_enkelt_navn():
@@ -357,7 +366,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
         
         if legg_til_husdyr:
-            resultat_tekst += f"\n* {hent_husdyr_tekst()}"
+            resultat_tekst += f"\n* {hent_husdyr_tekst(valgt_spill)}"
 
         st.success(resultat_tekst)
         st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
@@ -440,7 +449,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                 fam_tekst += "*Ingen barn i denne husholdningen ennå.*\n\n"
 
         if legg_til_husdyr:
-            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst()}"
+            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst(valgt_spill)}"
 
         st.success(fam_tekst)
         st.session_state.historikk.insert(0, f"[{valgt_spill}] Familie {felles_etter} ({antall_foreldre} voksne, {antall_barn} barn)")
