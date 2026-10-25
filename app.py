@@ -194,7 +194,6 @@ if valgt_fane == "🎲 Generer Sim / Familie":
             if budsjett:
                 st.write(f"**Startbudsjett:** {budsjett}")
 
-            # Kopierbar tekst boks
             bio = f"Navn: {fullt_navn}\nAlder: {alder}\nKarriere: {karriere}\nLivsmål: {mal}\nKategori: {valgt_kategori}"
             st.text_area("📋 Kopier Profil-bio:", bio, height=130)
 
@@ -261,7 +260,7 @@ elif valgt_fane == "👯 Tvillinger & Slektskap":
     st.write("Generer navn med bokstavrim (alliterasjon) eller matchende tema for tvillinger/trillinger!")
     
     type_par = st.radio("Velg type:", ["Tvillinger (2)", "Trillinger (3)"])
-     match_bokstav = st.checkbox("Tving samme startbokstav (Bokstavrim)", value=True)
+    match_bokstav = st.checkbox("Tving samme startbokstav (Bokstavrim)", value=True)
 
     if st.button("✨ Generer Matchende Navn"):
         data = NAVNE_DB[valgt_kategori]
@@ -272,7 +271,7 @@ elif valgt_fane == "👯 Tvillinger & Slektskap":
             bokstav = random.choice(list(set([n[0] for n in alle_navn])))
             filtrerte = [n for n in alle_navn if n.startswith(bokstav)]
             if len(filtrerte) < (2 if "Tvillinger" in type_par else 3):
-                filtrerte = alle_navn  # fallback om listen blir for kort
+                filtrerte = alle_navn
         else:
             filtrerte = alle_navn
 
