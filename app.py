@@ -490,12 +490,37 @@ spill_database = {
 }
 
 barn_aldre = ["Baby", "Småbarn (Toddler)", "Barn", "Tenåring"]
-hvordan_mottets = ["møttes ved et uhell da begge prøvde å ta den siste grillede osten", "møttes på biblioteket", "ble kjent på en fest", "møttes på universitetsområdet"]
-rare_hendelser_enkelt = ["Presterte å brenne ned kjøkkenet.", "Ble bortført av romvesener.", "Snakker med hagegnomer.", "Kjøpte 40 marsvin."]
-rare_hendelser_fam = ["Ble kastet ut av parken for usynlig saft-salg.", "Huset lukter brent pizza."]
-dynamikk_liste = ["Høyt konfliktnivå ved middagsbordet.", "Kaos og kreativt rot.", "Amisiøs og strukturert."]
+hvordan_mottets = [
+    "møttes ved et uhell da begge prøvde å ta den siste grillede osten i et nabolagsselskap",
+    "møttes på biblioteket mens de lette etter den samme støvete trylleformelboken",
+    "ble kjent etter at den ene krasjet en fest i nabohuset uten å være invitert",
+    "møttes på universitetsområdet etter å ha forbyttet ryggsekker under fadderuka",
+    "møttes på det lokale loppemarkedet mens de kranglet om en magisk dvergstatue",
+    "ble ført sammen av en tilfeldig lynnedslagsepisode ved det offentlige bassenget"
+]
+rare_hendelser_enkelt = [
+    "Presterte engang å brenne ned hele kjøkkenet mens vedkommende prøvde å smøre en brødskive.",
+    "Ble en gang bortført av romvesener mitt på natten, og kom tilbake med en ubendig trang til å lære sjakk.",
+    "Har en hemmelig vane med å snakke med hagegnomer når ingen andre ser på.",
+    "Ble en gang låst inne i et rom fordi noen glemte å bygge en dør.",
+    "Er overbevist om at huset deres er besøkt av et spøkelse som konstant flytter på tøflene.",
+    "Kjøpte en gang 40 marsvin på én dag og måtte bygge et eget rom til dem."
+]
+rare_hendelser_fam = [
+    "Hele familien ble en gang kastet ut av den lokale parken etter at barna prøvde å selge usynlig saft.",
+    "Foreldrene har en intern avtale om å aldri snakke om den gangen de kom til å fjerne stigen fra bassenget mens naboen svømte.",
+    "Huset deres lukter kanskje konstant av brent pizza, men sammen holder de humøret oppe uansett.",
+    "Det ryktes i nabolaget at familien har gjemt en skatt under rådhuset, men ingen tør å spørre dem.",
+    "Familien har en ubrytelig tradisjon om å danse panisk hver gang det begynner å regne."
+]
+dynamikk_liste = [
+    "Familien kjennetegnes av høyt konfliktnivå ved middagsbordet, men de stiller alltid opp for hverandre når det gjelder.",
+    "Husholdningen er preget av kaos og kreativt rot, hvor alle gjør akkurat som de selv vil.",
+    "Dette er en svært ambisiøs og strukturert familie som planlegger hver minste detalj av hverdagen.",
+    "En rolig og harmonisk husholdning hvor hovedfokuset er å nyte livet og ta ting som det kommer."
+]
 relasjonsstatuser = ["Singel 💔", "Gift 💍", "Forlovet 💎", "Skilt ⚡", "Komplisert... 🎭"]
-studieretninger = ["Biologi 🧬", "Drama 🎭", "Medisin 🩺", "Fysikk 🔬", "Kunst 🎨", "Historie 📚", "Juss ⚖️", "Økonomi 💼"]
+studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
 
 # ==========================================
 # SIDESTOLPE / MENY
@@ -549,207 +574,3 @@ def generer_personlighet(spill_navn):
         return f"{trekk[0]} og {trekk[1]}", random.choice(data["mal"])
 
 def sjekk_og_hent_okkult_status(modus_valg, spill_navn):
-    # Returnerer (er_okkult (bool), okkult_type_streng)
-    mulige_okkulte = spill_database[spill_navn]["okkulte"]
-    
-    if modus_valg == t["okkult_alternativer"][0]: # Kun menneske
-        return False, "Menneske"
-    elif modus_valg == t["okkult_alternativer"][1]: # Bestem okkult-type
-        return True, valgt_spesifikk_okkult
-    elif modus_valg == t["okkult_alternativer"][2]: # 🎲 Tilfeldig (Menneske eller okkult)
-        er_o = random.choice([True, False])
-        if er_o:
-            return True, random.choice(mulige_okkulte)
-        else:
-            return False, "Menneske"
-    else: # 🎲 Kun tilfeldig okkult (Ingen mennesker)
-        return True, random.choice(mulige_okkulte)
-
-def hent_navn_komplett(kategori_valg, kjonn_kode, er_ok, navne_stil):
-    if er_ok:
-        fornavn = random.choice(okkulte_fornavn)
-        etternavn = random.choice(okkulte_etternavn)
-        return fornavn, etternavn
-        
-    if kategori_valg == t["kat_tilfeldig"]:
-        tilfeldig_kat_navn = random.choice(list(NAVNE_DB.keys()))
-        data = NAVNE_DB[tilfeldig_kat_navn]
-    else:
-        data = NAVNE_DB.get(kategori_valg, NAVNE_DB["Norske navn"])
-
-    if navne_stil == t["type_normale"]:
-        g_liste = data.get("guttenavn_normale", ["Lucas"])
-        j_liste = data.get("jentenavn_normale", ["Emma"])
-    elif navne_stil == t["type_rare"]:
-        g_liste = data.get("guttenavn_rare", ["Bjarne"])
-        j_liste = data.get("jentenavn_rare", ["Gry"])
-    else:
-        g_liste = data.get("guttenavn_normale", []) + data.get("guttenavn_rare", [])
-        j_liste = data.get("jentenavn_normale", []) + data.get("jentenavn_rare", [])
-
-    if not g_liste: g_liste = ["Lucas"]
-    if not j_liste: j_liste = ["Emma"]
-
-    if kjonn_kode == t["kjonn_gutt"]:
-        fornavn = random.choice(g_liste)
-    elif kjonn_kode == t["kjonn_jente"]:
-        fornavn = random.choice(j_liste)
-    else:
-        fornavn = random.choice(g_liste + j_liste)
-        
-    etternavn = random.choice(data["etternavn"])
-    return fornavn, etternavn
-
-def hent_husdyr_tekst(spill, valgt_art):
-    mulige_arter = spill_database[spill]["husdyr_mulige"]
-    if valgt_art == t["dyr_tilfeldig"]:
-        art = random.choice(mulige_arter)
-    else:
-        art = valgt_art
-    
-    if "Hund" in art:
-        dn = random.choice(DYRENAVN["Hund"])
-    elif "Katt" in art:
-        dn = random.choice(DYRENAVN["Katt"])
-    elif "Hest" in art:
-        dn = random.choice(DYRENAVN["Hest"])
-    else:
-        dn = random.choice(DYRENAVN["Smådyr"])
-        
-    return f"🐾 Husdyr: {dn} ({art}) — Trekk: {random.choice(DYRE_TREKK)}"
-
-def hent_okonomi(antall):
-    return f"§{20000 + (antall - 1) * 5000 + random.randint(0, 10) * 1000:,}".replace(",", " ")
-
-# ==========================================
-# HOVEDDEL / FANER
-# ==========================================
-if valgt_fane == t["fane_sim"]:
-    st.title(t["tittel"])
-    st.write(t["beskrivelse"])
-    
-    modus = st.radio(t["modus"], [t["enkel"], t["familie"]], horizontal=True)
-
-    if st.button(t["generer"], type="primary", use_container_width=True):
-        er_o, o_type = sjekk_og_hent_okkult_status(okkult_modus, valgt_spill)
-
-        if modus == t["enkel"]:
-            fn, en = hent_navn_komplett(valgt_kategori, valgt_kjonn, er_o, valgt_navnetype)
-            personlighet, mal = generer_personlighet(valgt_spill)
-            
-            kan_studere = spill_database[valgt_spill]["kan_studere"]
-            er_paa_uni = kan_studere and random.random() < 0.35
-            
-            alder = "Voksen" if valgt_spill == "Sims 1 (Retro/Original)" else ("Ung voksen" if er_paa_uni else random.choice(["Ung voksen", "Voksen", "Eldre"]))
-            karriere = "Fulltidsstudent 📚" if er_paa_uni else random.choice(spill_database[valgt_spill]["karrierer"])
-            budsjett = hent_okonomi(1) if legg_til_okonomi else None
-            fullt_navn = f"{fn} {en}"
-
-            sart_hendelse = random.choice(rare_hendelser_enkelt)
-            historie_bio = f"{fullt_navn} lever et innholdsrikt liv som {alder.lower()}. "
-            historie_bio += f"Arbeider for tiden som {karriere}. "
-            historie_bio += f"Hovedmålet i livet er å: '{mal}'.\n\n"
-            historie_bio += f"Sært trekk / hendelse fra fortiden:\n- {sart_hendelse}"
-
-            res = f"### 🧑 {fullt_navn}\n* **Type:** {o_type}\n* **{t['alder']}:** {alder}\n* **{t['karriere']}:** {karriere}\n"
-            if budsjett:
-                res += f"* **{t['budsjett']}:** {budsjett}\n"
-            res += f"* **{t['personlighet']}:** {personlighet}\n* **{t['livsmal']}:** {mal}"
-            
-            if legg_til_husdyr:
-                res += f"\n* {hent_husdyr_tekst(valgt_spill, valgt_dyreart)}"
-
-            st.success(res)
-            st.text_area(t["bio_info"], historie_bio, height=140)
-
-            st.session_state.historikk.insert(0, f"[{valgt_spill}] {fullt_navn} ({o_type}, {alder})")
-
-            if st.button(t["lagre_fav"]):
-                st.session_state.favoritter.append(fullt_navn)
-                st.success(f"{fullt_navn} {t['lagret']}")
-
-        else:
-            # For familie velger vi felles etternavn basert på om første sim er okkult
-            _, felles_etter = hent_navn_komplett(valgt_kategori, t["kjonn_begge"], er_o, valgt_navnetype)
-            antall_foreldre = random.randint(1, 2)
-            antall_barn = 0 if valgt_spill == "Sims 1 (Retro/Original)" else random.randint(0, 4)
-            budsjett = hent_okonomi(antall_foreldre + antall_barn) if legg_til_okonomi else None
-
-            st.subheader(f"👨‍👩‍👧‍👦 Familie {felles_etter}")
-            if budsjett:
-                st.write(f"**{t['budsjett']}:** {budsjett}")
-
-            fam_tekst = f"=== FAMILIE {felles_etter.upper()} ===\n"
-            for i in range(antall_foreldre):
-                f_er_o, f_o_type = sjekk_og_hent_okkult_status(okkult_modus, valgt_spill)
-                fn, _ = hent_navn_komplett(valgt_kategori, valgt_kjonn, f_er_o, valgt_navnetype)
-                st.write(f"* **Forelder {i+1} [{f_o_type}]:** {fn} {felles_etter}")
-                fam_tekst += f"- {fn} {felles_etter} ({f_o_type})\n"
-
-            for i in range(antall_barn):
-                b_er_o, b_o_type = sjekk_og_hent_okkult_status(okkult_modus, valgt_spill)
-                fn, _ = hent_navn_komplett(valgt_kategori, valgt_kjonn, b_er_o, valgt_navnetype)
-                barn_alder = "Barn" if valgt_spill == "Sims 1 (Retro/Original)" else random.choice(barn_aldre)
-                st.write(f"* **Barn {i+1} [{b_o_type}]:** {fn} {felles_etter} ({barn_alder})")
-                fam_tekst += f"- Barn: {fn} {felles_etter} ({b_o_type}, {barn_alder})\n"
-
-            if legg_til_husdyr:
-                h_txt = hent_husdyr_tekst(valgt_spill, valgt_dyreart)
-                st.write(f"**{h_txt}**")
-                fam_tekst += f"\n{h_txt}"
-
-            st.text_area(t["bio_info"], fam_tekst, height=150)
-            st.session_state.historikk.insert(0, f"[{valgt_spill}] Familie {felles_etter}")
-
-elif valgt_fane == t["fane_tvillinger"]:
-    st.header(t["fane_tvillinger"])
-    type_par = st.radio("Type:", ["Tvillinger (2)", "Trillinger (3)"])
-    match_bokstav = st.checkbox("Tving samme startbokstav", value=True)
-
-    if st.button("✨ Generer"):
-        data = NAVNE_DB.get(valgt_kategori, NAVNE_DB["Norske navn"]) if valgt_kategori != t["kat_tilfeldig"] else random.choice(list(NAVNE_DB.values()))
-        alle = data.get("guttenavn_normale", []) + data.get("jentenavn_normale", [])
-        er_o, o_type = sjekk_og_hent_okkult_status(okkult_modus, valgt_spill)
-        _, etternavn = hent_navn_komplett(valgt_kategori, t["kjonn_begge"], er_o, valgt_navnetype)
-        
-        if match_bokstav and alle:
-            bokstav = random.choice(list(set([n[0] for n in alle])))
-            filtrerte = [n for n in alle if n.startswith(bokstav)]
-            if len(filtrerte) < (2 if "2" in type_par else 3):
-                filtrerte = alle
-        else:
-            filtrerte = alle
-
-        valgte = random.sample(filtrerte, 2 if "2" in type_par else 3)
-        st.subheader(f"👶 Familie {etternavn} [{o_type}]")
-        for v in valgte:
-            st.write(f"* **{v} {etternavn}**")
-
-elif valgt_fane == t["fane_dyr"]:
-    st.header(t["fane_dyr"])
-    valgt_dyr_fane = st.selectbox("Dyreart:", [t["dyr_tilfeldig"]] + spill_database[valgt_spill]["husdyr_mulige"])
-    if st.button("🐾 Generer"):
-        st.success(hent_husdyr_tekst(valgt_spill, valgt_dyr_fane))
-
-elif valgt_fane == t["fane_fav"]:
-    st.header(t["fane_fav"])
-    if not st.session_state.favoritter:
-        st.info("Ingen favoritter lagret.")
-    else:
-        for idx, fav in enumerate(st.session_state.favoritter):
-            c1, c2 = st.columns([4, 1])
-            c1.write(f"**{idx+1}. {fav}**")
-            if c2.button("❌", key=f"del_{idx}"):
-                st.session_state.favoritter.pop(idx)
-                st.rerun()
-
-elif valgt_fane == t["fane_hist"]:
-    st.header(t["fane_hist"])
-    if not st.session_state.historikk:
-        st.info("Ingen historikk.")
-    else:
-        for item in st.session_state.historikk[:20]:
-            st.write(f"* {item}")
-        if st.button("🗑️ Tøm"):
-            st.session_state.historikk = []
-            st.rerun()
