@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim, familie med tilfeldig antall barn, relasjonsstatus og ekte Sims 2-personlighetspoeng!")
+st.write("Skap din neste sim eller familie med full oversikt over kjønn, alder, relasjoner og Sims-personlighet!")
 
 # --- NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -152,7 +152,7 @@ st.sidebar.header("⚙️ Konfigurasjon")
 valgt_spill = st.sidebar.selectbox("Velg Sims-versjon:", list(spill_database.keys()))
 valgt_modus = st.sidebar.radio("Modus:", ["Enkeltsim", "Familie (Dynamisk antall barn & alder)"])
 valgt_spraak = st.sidebar.selectbox("Velg språk:", ["Begge", "Norsk", "Engelsk"])
-valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt", "Jente"])
+valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt / Mann", "Jente / Kvinne"])
 valgt_type = st.sidebar.selectbox("Velg navnetype:", ["Begge", "Normale", "Rare & gøye", "Okkult 🦇"])
 
 full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
@@ -175,16 +175,16 @@ def generer_personlighet(spill_navn):
         mal = random.choice(data["mal"])
         return f"{trekk[0]} og {trekk[1]}", mal
 
-def hent_fornavn(kjonn, stil, spraak):
+def hent_fornavn(kjonn_kode, stil, spraak):
     if stil == "Okkult":
         return random.choice(okkulte_fornavn)
     if spraak == "Norsk":
-        if kjonn == "Gutt":
+        if kjonn_kode == "Gutt":
             return random.choice(norske_guttenavn_normale if stil == "Normal" else norske_guttenavn_rare)
         else:
             return random.choice(norske_jentenavn_normale if stil == "Normal" else norske_jentenavn_rare)
     else:
-        if kjonn == "Gutt":
+        if kjonn_kode == "Gutt":
             return random.choice(engelske_guttenavn_normale if stil == "Normal" else engelske_guttenavn_rare)
         else:
             return random.choice(engelske_jentenavn_normale if stil == "Normal" else engelske_jentenavn_rare)
@@ -192,11 +192,17 @@ def hent_fornavn(kjonn, stil, spraak):
 def hent_enkelt_navn():
     if full_random:
         s = random.choice(["Norsk", "Engelsk"])
-        k = random.choice(["Gutt", "Jente"])
+        k_kode = random.choice(["Gutt", "Jente"])
         t = random.choice(["Normal", "Rare", "Okkult"])
     else:
         s = random.choice(["Norsk", "Engelsk"]) if valgt_spraak == "Begge" else valgt_spraak
-        k = random.choice(["Gutt", "Jente"]) if valgt_kjonn == "Begge" else valgt_kjonn
+        if valgt_kjonn == "Begge":
+            k_kode = random.choice(["Gutt", "Jente"])
+        elif valgt_kjonn == "Gutt / Mann":
+            k_kode = "Gutt"
+        else:
+            k_kode = "Jente"
+            
         if valgt_type == "Begge":
             t = random.choice(["Normal", "Rare", "Okkult"])
         elif valgt_type == "Normale":
@@ -213,7 +219,7 @@ def hent_enkelt_navn():
         etter = random.choice(etternavn_norske if s == "Norsk" else etternavn_engelske)
         spraak_tekst = s
 
-    fornavn = hent_fornavn(k, t, s)
+    fornavn = hent_fornavn(k_kode, t, s)
     personlighet, mal = generer_personlighet(valgt_spill)
     alder = random.choice(voksne_aldre + barn_aldre)
     
@@ -223,10 +229,12 @@ def hent_enkelt_navn():
     else:
         relasjon = "Barn i husholdningen 🧸"
 
+    kjonn_visning = "Mann / Gutt 👨" if k_kode == "Gutt" else "Kvinne / Jente 👩"
+
     return {
         "navn": f"{fornavn} {etter}",
+        "kjonn": kjonn_visning,
         "spraak": spraak_tekst,
-        "kjonn": k,
         "stil": t,
         "alder": alder,
         "relasjon": relasjon,
@@ -238,9 +246,9 @@ def hent_enkelt_navn():
 if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
-        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Alder:** {sim['alder']}\n* **Relasjonsstatus:** {sim['relasjon']}\n* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
+        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Relasjonsstatus:** {sim['relasjon']}\n* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
         st.success(resultat_tekst)
-        st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['alder']} - {sim['relasjon']})")
+        st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
     else:
         s = random.choice(["Norsk", "Engelsk"]) if valgt_spraak == "Begge" else valgt_spraak
         t = "Okkult" if valgt_type == "Okkult 🦇" else ("Normal" if valgt_type == "Normale" else ("Rare" if valgt_type == "Rare & gøye" else random.choice(["Normal", "Rare"])))
@@ -260,21 +268,23 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             fam_status = random.choice(["Alene-forelder 🧑‍👦", "Skilt / Delt omsorg ⚡", "Enke/Enkemann 🖤"])
 
         for i in range(antall_foreldre):
-            k = random.choice(["Gutt", "Jente"])
-            fornavn = hent_fornavn(k, t, s)
+            k_kode = random.choice(["Gutt", "Jente"])
+            k_tekst = "Mann 👨" if k_kode == "Gutt" else "Kvinne 👩"
+            fornavn = hent_fornavn(k_kode, t, s)
             alder = random.choice(voksne_aldre)
             pers, _ = generer_personlighet(valgt_spill)
-            foreldre_liste.append(f"**Forelder {i+1} ({alder}):** {fornavn} {felles_etter} *({pers})*")
+            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers})*")
 
         # Barn
         antall_barn = random.randint(0, 4)
         barn_liste = []
         for i in range(antall_barn):
-            k = random.choice(["Gutt", "Jente"])
-            fornavn = hent_fornavn(k, t, s)
+            k_kode = random.choice(["Gutt", "Jente"])
+            k_tekst = "Gutt 👦" if k_kode == "Gutt" else "Jente 👧"
+            fornavn = hent_fornavn(k_kode, t, s)
             alder = random.choice(barn_aldre)
             pers, mal = generer_personlighet(valgt_spill)
-            barn_liste.append(f"**Barn {i+1} ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
+            barn_liste.append(f"**Barn {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
 
         fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter} ({valgt_spill})\n"
         fam_tekst += f"* **Familie-status:** {fam_status}\n\n"
