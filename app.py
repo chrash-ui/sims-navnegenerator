@@ -8,7 +8,7 @@ if "historikk" not in st.session_state:
     st.session_state.historikk = []
 
 st.title("🎮 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, karrierer, valgfri økonomi og kopierbar bio!")
+st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, karrierer, startøkonomi og en fyldig bakgrunnshistorie!")
 
 # --- UTVIDEDE NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -138,6 +138,40 @@ relasjonsstatuser = [
 ]
 
 studieretninger = ["Biologi 🧬", "Drama & Teater 🎭", "Medisin 🩺", "Fysikk & Vitenskap 🔬", "Kunst & Design 🎨", "Historie & Litteratur 📚", "Juss & Politikk ⚖️", "Bedriftsøkonomi 💼"]
+
+# --- HISTORIE-ELEMENTER FOR BIO ---
+hvordan_mottets = [
+    "møttes ved et uhell da begge prøvde å ta den siste grillede osten i et nabolagsselskap",
+    "møttes på biblioteket mens de lette etter den samme støvete trylleformelboken",
+    "ble kjent etter at den ene krasjet en fest i nabohuset uten å være invitert",
+    "møttes på universitetsområdet etter å ha forbyttet ryggsekker under fadderuka",
+    "møttes på det lokale loppemarkedet mens de kranglet om en magisk dvergstatue",
+    "ble ført sammen av en tilfeldig lynnedslagsepisode ved det offentlige bassenget"
+]
+
+rare_hendelser_enkelt = [
+    "Presterte engang å brenne ned hele kjøkkenet mens vedkommende prøvde å smøre en brødskive.",
+    "Bli en gang bortført av romvesener mitt på natten, og kom tilbake med en ubendig trang til å lære sjakk.",
+    "Har en hemmelig vane med å snakke med hagegnomer når ingen andre ser på.",
+    "Ble en gang låst inne i et rom fordi noen glemte å bygge en dør.",
+    "Er overbevist om at huset deres er besøkt av et spøkelse som konstant flytter på tøflene.",
+    "Kjøpte en gang 40 marsvin på én dag og måtte bygge et eget rom til dem."
+]
+
+rare_hendelser_fam = [
+    "Hele familien ble en gang kastet ut av den lokale parken etter at barna prøvde å selge usynlig saft.",
+    "Foreldrene har en intern avtale om å aldri snakke om den gangen de kom til å fjerne steigen fra bassenget mens naboen svømte.",
+    "Huset deres lukter kanskje konstant av brent pizza, men sammen holder de humøret oppe uansett.",
+    "Det ryktes i nabolaget at familien har gjemt en skatt under rådhuset, men ingen tør å spørre dem.",
+    "Familien har en ubrytelig tradisjon om å danse panisk hver gang det begynner å regne."
+]
+
+dynamikk_liste = [
+    "Familien kjennetegnes av høyt konfliktnivå ved middagsbordet, men de stiller alltid opp for hverandre når det gjelder.",
+    "Husholdningen er preget av kaos og kreativt rot, hvor alle gjør akkurat som de selv vil.",
+    "Dette er en svært ambisiøs og strukturert familie som planlegger hver minste detalj av hverdagen.",
+    "En rolig og harmonize husholdning hvor hovedfokuset er å nyte livet og ta ting som det kommer."
+]
 
 # --- SPILLSPESIFIKKE DATA ---
 spill_database = {
@@ -330,7 +364,7 @@ def hent_enkelt_navn():
     
     if kan_ha_universitet and random.random() < 0.35:
         er_paa_universitet = True
-        studie_info = f"🎓 Studerer på universitetet: {studieretninger}"
+        studie_info = f"🎓 Studerer på universitetet: {random.choice(studieretninger)}"
         relasjon = "Student 🎒"
     else:
         relasjon = random.choice(relasjonsstatuser)
@@ -354,6 +388,7 @@ def hent_enkelt_navn():
 
     return {
         "navn": f"{fornavn} {etter}",
+        "fornavn": fornavn,
         "kjonn": kjonn_visning,
         "spraak": spraak_tekst,
         "stil": stil_tekst,
@@ -371,24 +406,15 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
         
-        bio_tekst = f"=== SIM-PROFIL ({valgt_spill}) ===\n"
-        bio_tekst += f"Navn: {sim['navn']}\n"
-        bio_tekst += f"Kjønn: {sim['kjonn']}\n"
-        bio_tekst += f"Alder: {sim['alder']}\n"
-        bio_tekst += f"Relasjon: {sim['relasjon']}\n"
-        bio_tekst += f"Karriere: {sim['karriere']}\n"
-        if sim['studie']:
-            bio_tekst += f"Studie: {sim['studie']}\n"
-        if sim['budsjett']:
-            bio_tekst += f"Startbudsjett: {sim['budsjett']}\n"
-        bio_tekst += f"Stil: {sim['stil']}\n"
-        bio_tekst += f"Personlighet: {sim['personlighet']}\n"
-        bio_tekst += f"Livsmål: {sim['mal']}\n"
+        # Generer bio-historie
+        sart_hendelse = random.choice(rare_hendelser_enkelt)
+        historie_bio = f"{sim['navn']} lever et innholdsrikt liv som {sim['alder'].lower()}. "
+        historie_bio += f"Arbeider for tiden som {sim['karriere']}. "
+        historie_bio += f"Hovedmålet i livet er å: '{sim['mal']}'.\n\n"
+        historie_bio += f"Sært trekk / hendelse fra fortiden:\n- {sart_hendelse}"
         
-        husdyr_string = ""
         if legg_til_husdyr:
-            husdyr_string = hent_husdyr_tekst(valgt_spill)
-            bio_tekst += f"{husdyr_string}\n"
+            historie_bio += f"\n\nBor sammen med et kjæledyr: {hent_husdyr_tekst(valgt_spill)}"
 
         resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n* **Karriere / Jobb:** {sim['karriere']}\n"
         if sim['studie']:
@@ -398,12 +424,12 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
         resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
         
         if legg_til_husdyr:
-            resultat_tekst += f"\n* {husdyr_string}"
+            resultat_tekst += f"\n* {hent_husdyr_tekst(valgt_spill)}"
 
         st.success(resultat_tekst)
         
-        st.markdown("### 📋 Kopier Bio")
-        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere:", bio_tekst, height=180)
+        st.markdown("### 📖 Bakgrunnshistorie & Bio")
+        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere bioen:", historie_bio, height=200)
 
         st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
     else:
@@ -425,6 +451,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
 
         antall_foreldre = random.choice([1, 2])
         foreldre_liste = []
+        foreldre_navn_kun = []
         karriere_liste = spill_database[valgt_spill]["karrierer"]
         
         if er_universitets_verden:
@@ -438,6 +465,7 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             k_kode = random.choice(["Gutt", "Jente"])
             k_tekst = "Mann 👨" if k_kode == "Gutt" else "Kvinne 👩"
             fornavn = hent_fornavn(k_kode, er_okkult, s)
+            foreldre_navn_kun.append(fornavn)
             
             if er_universitets_verden:
                 alder = "Ung voksen"
@@ -475,19 +503,21 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             pers, mal = generer_personlighet(valgt_spill)
             barn_liste.append(f"**Barn {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
 
-        bio_tekst = f"=== FAMILIE-PROFIL ({valgt_spill}) ===\n"
-        bio_tekst += f"Etternavn: Familie {felles_etter}{familie_okkult_tekst}\n"
-        bio_tekst += f"Familie-status: {fam_status}\n"
-        if budsjett:
-            bio_tekst += f"Startbudsjett: {budsjett}\n\n"
-        bio_tekst += "Voksne:\n" + "\n".join([f"- {f}" for f in foreldre_liste]) + "\n\n"
-        if barn_liste:
-            bio_tekst += "Barn:\n" + "\n".join([f"- {b}" for b in barn_liste]) + "\n\n"
+        # Generer familie-bio
+        mote_historie = f"De voksne i husholdningen ({' og '.join(foreldre_navn_kun)}) {random.choice(hvordan_mottets)}." if antall_foreldre > 1 else f"{foreldre_navn_kun[0]} starter et nytt kapittel på egenhånd."
+        fam_dynamikk = random.choice(dynamikk_liste)
+        fam_sært = random.choice(rare_hendelser_fam)
         
-        husdyr_string = ""
+        bio_tekst = f"=== FAMILIE-HISTORIE: FAMILIE {felles_etter.upper()} ({valgt_spill}) ===\n"
+        bio_tekst += f"Status: {fam_status}\n"
+        if budsjett:
+            bio_tekst += f"Startøkonomi: {budsjett}\n"
+        bio_tekst += f"\nHvordan de fant sammen / Bakgrunn:\n{mote_historie}\n\n"
+        bio_tekst += f"Familiedynamikk:\n{fam_dynamikk}\n\n"
+        bio_tekst += f"Sær hendelse i familiens fortid:\n{fam_sært}\n"
+        
         if legg_til_husdyr:
-            husdyr_string = hent_husdyr_tekst(valgt_spill)
-            bio_tekst += f"{husdyr_string}\n"
+            bio_tekst += f"\nHusdyr i familien: {hent_husdyr_tekst(valgt_spill)}\n"
 
         fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter}{familie_okkult_tekst} ({valgt_spill})\n"
         fam_tekst += f"* **Familie-status:** {fam_status}\n"
@@ -504,12 +534,12 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                 fam_tekst += "*Ingen barn i denne husholdningen ennå.*\n\n"
 
         if legg_til_husdyr:
-            fam_tekst += f"**Husdyr i husholdningen:**\n* {husdyr_string}"
+            fam_tekst += f"**Husdyr i husholdningen:**\n* {hent_husdyr_tekst(valgt_spill)}"
 
         st.success(fam_tekst)
         
-        st.markdown("### 📋 Kopier Bio")
-        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere:", bio_tekst, height=220)
+        st.markdown("### 📖 Bakgrunnshistorie & Bio")
+        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere familiehistorien:", bio_tekst, height=260)
 
         st.session_state.historikk.insert(0, f"[{valgt_spill}] Familie {felles_etter} ({antall_foreldre} voksne, {antall_barn} barn)")
 
