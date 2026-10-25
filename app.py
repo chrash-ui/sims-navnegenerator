@@ -1,84 +1,14 @@
 import random
 import streamlit as st
 
-st.set_page_config(page_title="Ultimate Sims Navnegenerator", page_icon="🟢", layout="centered")
+st.set_page_config(page_title="Ultimate Sims Navnegenerator", page_icon="🎮", layout="centered")
 
-# --- SIDESTOLPE (TEMAVELGER FLYTTEST ØVERST) ---
-mørk_modus = st.sidebar.checkbox("🌙 Mørk modus", value=False)
+# Initialiser historikk i sesjonen hvis den ikke finnes
+if "historikk" not in st.session_state:
+    st.session_state.historikk = []
 
-# --- SIMS-INSPIRERT STYLING (CSS) ---
-if mørk_modus:
-    bg_color = "#1e1e2e"
-    card_bg = "#2b2b3d"
-    text_color = "#e0e0e0"
-    header_color = "#81c784"
-    sidebar_bg = "#181825"
-    border_color = "#81c784"
-    btn_bg = "#388e3c"
-    btn_hover = "#4caf50"
-else:
-    bg_color = "#f4f7f6"
-    card_bg = "#ffffff"
-    text_color = "#333333"
-    header_color = "#2e7d32"
-    sidebar_bg = "#e8f5e9"
-    border_color = "#65C467"
-    btn_bg = "#65C467"
-    btn_hover = "#4CAF50"
-
-st.markdown(f"""
-<style>
-    /* Hovedstil og bakgrunn */
-    .stApp {{
-        background-color: {bg_color};
-        color: {text_color};
-    }}
-    
-    /* Overskrifter */
-    h1, h2, h3, h4 {{
-        color: {header_color} !important;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }}
-    
-    /* Resultatboks (Sims-kort) */
-    .sims-card {{
-        background-color: {card_bg};
-        color: {text_color};
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 6px solid {border_color};
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        margin-bottom: 20px;
-    }}
-    
-    .sims-card p, .sims-card li {{
-        color: {text_color};
-    }}
-    
-    /* Knapper med Sims-grønn farge */
-    .stButton>button {{
-        background-color: {btn_bg};
-        color: white !important;
-        border-radius: 8px;
-        font-weight: bold;
-        border: none;
-        padding: 0.5rem 1rem;
-        transition: all 0.3s ease;
-    }}
-    .stButton>button:hover {{
-        background-color: {btn_hover};
-        color: white !important;
-    }}
-    
-    /* Sidestolpe */
-    [data-testid="stSidebar"] {{
-        background-color: {sidebar_bg};
-    }}
-</style>
-""", unsafe_allow_html=True)
-
-st.title("🟢 Ultimate Sims Navnegenerator")
-st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, dyretrekk, utvidede navnelister og karrierer!")
+st.title("🎮 Ultimate Sims Navnegenerator")
+st.write("Skap din neste sim eller familie med spilltilpassede kjæledyr, karrierer, valgfri økonomi og kopierbar bio!")
 
 # --- UTVIDEDE NAVNELISTER ---
 norske_guttenavn_normale = [
@@ -284,7 +214,7 @@ spill_database = {
 
 barn_aldre = ["Baby", "Småbarn (Toddler)", "Barn", "Tenåring"]
 
-# --- SIDESTOLPE RESTEN AV INNSTILLINGENE ---
+# --- SIDESTOLPE ---
 st.sidebar.header("⚙️ Konfigurasjon")
 valgt_spill = st.sidebar.selectbox("Velg Sims-versjon:", list(spill_database.keys()))
 valgt_modus = st.sidebar.radio("Modus:", ["Enkeltsim", "Familie (Dynamisk antall barn & alder)"])
@@ -292,7 +222,7 @@ valgt_spraak = st.sidebar.selectbox("Velg språk:", ["Begge", "Norsk", "Engelsk"
 valgt_kjonn = st.sidebar.selectbox("Velg kjønn:", ["Begge", "Gutt / Mann", "Jente / Kvinne"])
 valgt_type = st.sidebar.selectbox("Velg navnetype:", ["Begge", "Normale", "Rare & gøye"])
 
-# --- OKKULT & HUSDYR ---
+# --- NYE VALG I SIDESTOLPE ---
 st.sidebar.markdown("---")
 er_okkult = st.sidebar.checkbox("🦇 Er okkult sim?", value=False)
 valgt_okkult_type = None
@@ -301,11 +231,9 @@ if er_okkult:
     valgt_okkult_type = st.sidebar.selectbox("Velg okkult-type:", ["Tilfeldig okkult"] + tilgjengelige_okkulte)
 
 legg_til_husdyr = st.sidebar.checkbox("🐾 Legg til husdyr (Pets)?", value=False)
-full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
+legg_til_okonomi = st.sidebar.checkbox("💰 Inkluder startøkonomi (§)?", value=True)
 
-# Initialiser historikk i sesjonen hvis den ikke finnes
-if "historikk" not in st.session_state:
-    st.session_state.historikk = []
+full_random = st.sidebar.checkbox("🎲 Fullstendig tilfeldig", value=False)
 
 def generer_personlighet(spill_navn):
     data = spill_database[spill_navn]
@@ -354,7 +282,14 @@ def hent_husdyr_tekst(spill):
         
     mulige_dyre_trekk = spill_database[spill]["dyre_trekk"]
     trekk = random.choice(mulige_dyre_trekk)
-    return f"🐾 <b>Husdyr:</b> {dyre_navn} ({art}) — <i>Trekk: {trekk}</i>"
+    return f"🐾 Husdyr: {dyre_navn} ({art}) — Trekk: {trekk}"
+
+def hent_okonomi(antall_personer):
+    base_sum = 20000
+    tillegg = (antall_personer - 1) * 5000
+    tilfeldig_ekstra = random.randint(0, 10) * 1000
+    totalt = base_sum + tillegg + tilfeldig_ekstra
+    return f"§{totalt:,}".replace(",", " ")
 
 def hent_enkelt_navn():
     if full_random:
@@ -395,7 +330,7 @@ def hent_enkelt_navn():
     
     if kan_ha_universitet and random.random() < 0.35:
         er_paa_universitet = True
-        studie_info = f"🎓 Studerer på universitetet: <b>{random.choice(studieretninger)}</b>"
+        studie_info = f"🎓 Studerer på universitetet: {studieretninger}"
         relasjon = "Student 🎒"
     else:
         relasjon = random.choice(relasjonsstatuser)
@@ -415,6 +350,7 @@ def hent_enkelt_navn():
             alder = random.choice(["Ung voksen", "Voksen", "Eldre"] if har_uv else ["Voksen", "Eldre"])
 
     kjonn_visning = "Mann / Gutt 👨" if k_kode == "Gutt" else "Kvinne / Jente 👩"
+    budsjett = hent_okonomi(1) if legg_til_okonomi else None
 
     return {
         "navn": f"{fornavn} {etter}",
@@ -426,35 +362,49 @@ def hent_enkelt_navn():
         "karriere": karriere,
         "studie": studie_info,
         "personlighet": personlighet,
-        "mal": mal
+        "mal": mal,
+        "budsjett": budsjett
     }
 
 # --- HOVEDDEL ---
 if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
     if valgt_modus == "Enkeltsim":
         sim = hent_enkelt_navn()
-        resultat_tekst = f"""
-        <div class="sims-card">
-            <h3>🟢 {sim['navn']}</h3>
-            <ul>
-                <li><b>Kjønn:</b> {sim['kjonn']}</li>
-                <li><b>Alder:</b> {sim['alder']}</li>
-                <li><b>Livssituasjon / Relasjon:</b> {sim['relasjon']}</li>
-                <li><b>Karriere / Jobb:</b> {sim['karriere']}</li>
-        """
+        
+        bio_tekst = f"=== SIM-PROFIL ({valgt_spill}) ===\n"
+        bio_tekst += f"Navn: {sim['navn']}\n"
+        bio_tekst += f"Kjønn: {sim['kjonn']}\n"
+        bio_tekst += f"Alder: {sim['alder']}\n"
+        bio_tekst += f"Relasjon: {sim['relasjon']}\n"
+        bio_tekst += f"Karriere: {sim['karriere']}\n"
         if sim['studie']:
-            resultat_tekst += f"<li>{sim['studie']}</li>"
-        resultat_tekst += f"""
-                <li><b>Spill:</b> {valgt_spill}</li>
-                <li><b>Stil/Språk:</b> {sim['spraak']} ({sim['stil']})</li>
-                <li><b>Personlighet:</b> {sim['personlighet']}</li>
-                <li><b>Livsmål/Ambisjon:</b> {sim['mal']}</li>
-        """
+            bio_tekst += f"Studie: {sim['studie']}\n"
+        if sim['budsjett']:
+            bio_tekst += f"Startbudsjett: {sim['budsjett']}\n"
+        bio_tekst += f"Stil: {sim['stil']}\n"
+        bio_tekst += f"Personlighet: {sim['personlighet']}\n"
+        bio_tekst += f"Livsmål: {sim['mal']}\n"
+        
+        husdyr_string = ""
         if legg_til_husdyr:
-            resultat_tekst += f"<li>{hent_husdyr_tekst(valgt_spill)}</li>"
-        resultat_tekst += "</ul></div>"
+            husdyr_string = hent_husdyr_tekst(valgt_spill)
+            bio_tekst += f"{husdyr_string}\n"
 
-        st.markdown(resultat_tekst, unsafe_allow_html=True)
+        resultat_tekst = f"### 🧑 {sim['navn']}\n* **Kjønn:** {sim['kjonn']}\n* **Alder:** {sim['alder']}\n* **Livssituasjon / Relasjon:** {sim['relasjon']}\n* **Karriere / Jobb:** {sim['karriere']}\n"
+        if sim['studie']:
+            resultat_tekst += f"* {sim['studie']}\n"
+        if sim['budsjett']:
+            resultat_tekst += f"* **Startbudsjett:** {sim['budsjett']}\n"
+        resultat_tekst += f"* **Spill:** {valgt_spill}\n* **Stil/Språk:** {sim['spraak']} ({sim['stil']})\n* **Personlighet:** {sim['personlighet']}\n* **Livsmål/Ambisjon:** {sim['mal']}"
+        
+        if legg_til_husdyr:
+            resultat_tekst += f"\n* {husdyr_string}"
+
+        st.success(resultat_tekst)
+        
+        st.markdown("### 📋 Kopier Bio")
+        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere:", bio_tekst, height=180)
+
         st.session_state.historikk.insert(0, f"[{valgt_spill}] {sim['navn']} ({sim['kjonn']}, {sim['alder']})")
     else:
         s = random.choice(["Norsk", "Engelsk"]) if valgt_spraak == "Begge" else valgt_spraak
@@ -506,12 +456,15 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
                     forelder_studie = f" | 🎓 Studier: {random.choice(studieretninger)}"
 
             pers, _ = generer_personlighet(valgt_spill)
-            foreldre_liste.append(f"<li><b>Forelder {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} <i>(Jobb: {forelder_jobb} | {pers}{forelder_studie})</i></li>")
+            foreldre_liste.append(f"**Forelder {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *(Jobb: {forelder_jobb} | {pers}{forelder_studie})*")
 
         if er_universitets_verden:
             antall_barn = 0
         else:
             antall_barn = random.randint(0, 4)
+
+        totalt_medlemmer = antall_foreldre + antall_barn
+        budsjett = hent_okonomi(totalt_medlemmer) if legg_til_okonomi else None
 
         barn_liste = []
         for i in range(antall_barn):
@@ -520,31 +473,44 @@ if st.button("✨ Generer nytt!", type="primary", use_container_width=True):
             fornavn = hent_fornavn(k_kode, er_okkult, s)
             alder = random.choice(barn_aldre)
             pers, mal = generer_personlighet(valgt_spill)
-            barn_liste.append(f"<li><b>Barn {i+1} [{k_tekst}] ({alder}):</b> {fornavn} {felles_etter} <i>({pers} — Mål: {mal})</i></li>")
+            barn_liste.append(f"**Barn {i+1} [{k_tekst}] ({alder}):** {fornavn} {felles_etter} *({pers} — Mål: {mal})*")
 
-        fam_tekst = f"""
-        <div class="sims-card">
-            <h3>🟢 Familie {felles_etter}{familie_okkult_tekst} ({valgt_spill})</h3>
-            <p><b>Familie-status:</b> {fam_status}</p>
-            <p><b>Voksne i husholdningen:</b></p>
-            <ul>
-        """
-        fam_tekst += "".join(foreldre_liste) + "</ul>"
+        bio_tekst = f"=== FAMILIE-PROFIL ({valgt_spill}) ===\n"
+        bio_tekst += f"Etternavn: Familie {felles_etter}{familie_okkult_tekst}\n"
+        bio_tekst += f"Familie-status: {fam_status}\n"
+        if budsjett:
+            bio_tekst += f"Startbudsjett: {budsjett}\n\n"
+        bio_tekst += "Voksne:\n" + "\n".join([f"- {f}" for f in foreldre_liste]) + "\n\n"
+        if barn_liste:
+            bio_tekst += "Barn:\n" + "\n".join([f"- {b}" for b in barn_liste]) + "\n\n"
+        
+        husdyr_string = ""
+        if legg_til_husdyr:
+            husdyr_string = hent_husdyr_tekst(valgt_spill)
+            bio_tekst += f"{husdyr_string}\n"
+
+        fam_tekst = f"### 👨‍👩‍👧‍👦 Familie {felles_etter}{familie_okkult_tekst} ({valgt_spill})\n"
+        fam_tekst += f"* **Familie-status:** {fam_status}\n"
+        if budsjett:
+            fam_tekst += f"* **Startbudsjett:** {budsjett}\n"
+        fam_tekst += "\n" + "\n".join(foreldre_liste) + "\n\n"
         
         if barn_liste:
-            fam_tekst += "<p><b>Barn inngår i husholdningen:</b></p><ul>" + "".join(barn_liste) + "</ul>"
+            fam_tekst += "**Barn inngår i husholdningen:**\n" + "\n".join(barn_liste) + "\n\n"
         else:
             if er_universitets_verden and valgt_spill == "Sims 2 (Klassisk drama)":
-                fam_tekst += "<p><em>Ingen barn her (Sims 2-universitetet tillater ikke barn i studenthusholdninger).</em></p>"
+                fam_tekst += "*Ingen barn her (Sims 2-universitetet tillater ikke barn i studenthusholdninger).* \n\n"
             else:
-                fam_tekst += "<p><em>Ingen barn i denne husholdningen ennå.</em></p>"
+                fam_tekst += "*Ingen barn i denne husholdningen ennå.*\n\n"
 
         if legg_til_husdyr:
-            fam_tekst += f"<p><b>Husdyr i husholdningen:</b></p><ul><li>{hent_husdyr_tekst(valgt_spill)}</li></ul>"
-            
-        fam_tekst += "</div>"
+            fam_tekst += f"**Husdyr i husholdningen:**\n* {husdyr_string}"
 
-        st.markdown(fam_tekst, unsafe_allow_html=True)
+        st.success(fam_tekst)
+        
+        st.markdown("### 📋 Kopier Bio")
+        st.text_area("Bruk knappen øverst til høyre i boksen for å kopiere:", bio_tekst, height=220)
+
         st.session_state.historikk.insert(0, f"[{valgt_spill}] Familie {felles_etter} ({antall_foreldre} voksne, {antall_barn} barn)")
 
 # --- HISTORIKK ---
